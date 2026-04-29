@@ -39,6 +39,7 @@ src/
 ├── app/                       # Next.js App Router
 │   ├── page.tsx               # Landing
 │   ├── editor/page.tsx        # /editor (force-dynamic — Konva is client-only)
+│   ├── gallery/page.tsx       # /gallery (saved local designs)
 │   ├── templates/page.tsx     # /templates (30 presets)
 │   ├── bulk/page.tsx          # /bulk (ZIP exporter)
 │   ├── how-to-apply/page.tsx  # /how-to-apply (macOS 13/14/15 guide)
@@ -86,12 +87,25 @@ with no Konva dependency — keeping `/` lightweight for Lighthouse.
   edit (add/remove/duplicate/reorder/color change).
 - `undo()` / `redo()` swap snapshots and persist to `localStorage` under the
   `macfolders:current` key on every change.
-- `saveToGallery()` writes the current project to `macfolders:gallery` (max 20
-  entries) — surfaced in the **My folders** drawer in the editor toolbar.
+- `saveToGallery()` writes the current project to `macfolders:gallery` (max 100
+  entries) — surfaced in the **My folders** drawer and `/gallery`.
+
+## Saved data model
+
+No database is required. Projects are saved in browser `localStorage`:
+
+- `macfolders:current`: current `FolderProject`.
+- `macfolders:gallery`: array of saved `FolderProject` items.
+
+Each project stores `id`, `name`, `baseColor`, `settings` (style, gradient,
+brightness, opacity, shadow, outline, tags), `layers`, `createdAt`, and
+`updatedAt`.
 
 ### Export
 
 - **PNG 512 / 1024**: `stage.toDataURL({ pixelRatio })` → blob → `file-saver`.
+- **SVG preview**: static folder SVG with the saved style settings and the first
+  emoji layer when present.
 - **Copy PNG**: same source, written to the clipboard via `ClipboardItem`.
 - **`.icns` (Pro)**: PNG 1024 → `png2icons.createICNS` (BICUBIC scaling) →
   blob → `file-saver`. The Pro modal currently lets you generate it for free.

@@ -47,12 +47,12 @@ export function FolderCanvas({ size = 540, onStageReady }: FolderCanvasProps) {
       const back = stage.findOne<Konva.Path>(".folder-back");
       const front = stage.findOne<Konva.Path>(".folder-front");
       const rim = stage.findOne<Konva.Path>(".folder-rim");
-      if (back) back.fillLinearGradientColorStops(backStops(hex));
-      if (front) front.fillLinearGradientColorStops(frontStops(hex));
+      if (back) back.fillLinearGradientColorStops(backStops(hex, project.settings));
+      if (front) front.fillLinearGradientColorStops(frontStops(hex, project.settings));
       if (rim) rim.stroke(shadeHex(hex, 22));
       stage.batchDraw();
     });
-  }, []);
+  }, [project.settings]);
 
   const registerNode = React.useCallback(
     (id: string, node: Konva.Node | null) => {
@@ -107,7 +107,7 @@ export function FolderCanvas({ size = 540, onStageReady }: FolderCanvasProps) {
       }}
     >
       <KonvaLayer listening={false}>
-        <FolderBack baseColor={project.baseColor} />
+        <FolderBack baseColor={project.baseColor} settings={project.settings} />
       </KonvaLayer>
       <KonvaLayer>
         {insideLayers.map((layer) => (
@@ -122,7 +122,7 @@ export function FolderCanvas({ size = 540, onStageReady }: FolderCanvasProps) {
         ))}
       </KonvaLayer>
       <KonvaLayer listening={false}>
-        <FolderFront baseColor={project.baseColor} />
+        <FolderFront baseColor={project.baseColor} settings={project.settings} />
       </KonvaLayer>
       <KonvaLayer>
         {badgeLayers.map((layer) => (

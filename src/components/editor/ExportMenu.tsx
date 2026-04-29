@@ -19,14 +19,17 @@ import {
   DialogTitle,
   DialogDescription,
 } from "@/components/ui/dialog";
-import { copyPngToClipboard, exportIcns, exportPng } from "@/lib/export";
+import { copyPngToClipboard, exportIcns, exportPng, exportSvg } from "@/lib/export";
+import { renderFolderSvgMarkup } from "@/components/folder/FolderSvg";
+import type { FolderProject } from "@/lib/types";
 
 interface ExportMenuProps {
   stage: Konva.Stage | null;
   filename: string;
+  project: FolderProject;
 }
 
-export function ExportMenu({ stage, filename }: ExportMenuProps) {
+export function ExportMenu({ stage, filename, project }: ExportMenuProps) {
   const [proOpen, setProOpen] = React.useState(false);
   const [error, setError] = React.useState<string | null>(null);
   const [busy, setBusy] = React.useState(false);
@@ -60,6 +63,20 @@ export function ExportMenu({ stage, filename }: ExportMenuProps) {
           </DropdownMenuItem>
           <DropdownMenuItem onClick={() => stage && run(() => exportPng(stage, 1024, filename).then(() => undefined))}>
             <Download className="h-4 w-4" /> PNG 1024×1024
+          </DropdownMenuItem>
+          <DropdownMenuItem
+            onClick={() => {
+              const emojiLayer = project.layers.find((layer) => layer.type === "emoji");
+              const svg = renderFolderSvgMarkup({
+                baseColor: project.baseColor,
+                settings: project.settings,
+                emoji: emojiLayer?.type === "emoji" ? emojiLayer.emoji : undefined,
+                label: project.name,
+              });
+              exportSvg(svg, filename);
+            }}
+          >
+            <Download className="h-4 w-4" /> SVG preview
           </DropdownMenuItem>
           <DropdownMenuItem
             onClick={() =>

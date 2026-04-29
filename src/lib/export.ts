@@ -58,6 +58,11 @@ export async function exportIcns(
   saveAs(new Blob([new Uint8Array(icns)]), `${slugify(filename) || "macfolder"}.icns`);
 }
 
+export function exportSvg(svgMarkup: string, filename: string): void {
+  const blob = new Blob([svgMarkup], { type: "image/svg+xml;charset=utf-8" });
+  saveAs(blob, `${slugify(filename) || "macfolder"}.svg`);
+}
+
 export interface BulkExportItem {
   name: string;
   png512: Uint8Array;

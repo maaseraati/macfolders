@@ -41,6 +41,7 @@ import templates from "@/data/templates.json";
 import type { TemplateDefinition } from "@/lib/types";
 import { FolderSvg } from "@/components/folder/FolderSvg";
 import { cn } from "@/lib/utils";
+import type { FolderStyle } from "@/lib/types";
 
 const TEMPLATES = templates as TemplateDefinition[];
 
@@ -89,16 +90,196 @@ export function ToolPanel() {
 }
 
 function ColorTab() {
-  const baseColor = useEditorStore((s) => s.project.baseColor);
+  const project = useEditorStore((s) => s.project);
   const setBaseColor = useEditorStore((s) => s.setBaseColor);
+  const updateSettings = useEditorStore((s) => s.updateSettings);
+  const setTags = useEditorStore((s) => s.setTags);
+  const settings = project.settings;
+  const [tagText, setTagText] = React.useState(settings.tags.join(", "));
+
+  React.useEffect(() => {
+    setTagText(settings.tags.join(", "));
+  }, [settings.tags]);
+
   return (
     <div className="space-y-4">
-      <ColorPicker label="Base color" value={baseColor} onChange={setBaseColor} />
+      <ColorPicker label="Base color" value={project.baseColor} onChange={setBaseColor} />
+      <div className="space-y-2">
+        <Label>Base style</Label>
+        <div className="grid grid-cols-2 gap-2">
+          {FOLDER_STYLES.map((style) => (
+            <button
+              key={style.value}
+              type="button"
+              className={cn(
+                "rounded-xl border p-2 text-left transition-colors hover:bg-neutral-50",
+                settings.style === style.value
+                  ? "border-blue-500 bg-blue-50/70"
+                  : "border-black/5 bg-white"
+              )}
+              onClick={() => updateSettings({ style: style.value })}
+            >
+              <FolderSvg
+                baseColor={project.baseColor}
+                settings={{ ...settings, style: style.value }}
+                size={82}
+                className="mx-auto"
+              />
+              <span className="mt-1 block text-center text-[11px] font-medium text-neutral-700">
+                {style.label}
+              </span>
+            </button>
+          ))}
+        </div>
+      </div>
+      <RangeControl
+        label="Gradient"
+        value={settings.gradientStrength}
+        min={0}
+        max={1.6}
+        step={0.05}
+        format={(v) => `${Math.round(v * 100)}%`}
+        onChange={(v) => updateSettings({ gradientStrength: v })}
+      />
+      <RangeControl
+        label="Brightness"
+        value={settings.brightness}
+        min={-35}
+        max={35}
+        step={1}
+        format={(v) => `${v > 0 ? "+" : ""}${v}%`}
+        onChange={(v) => updateSettings({ brightness: v })}
+      />
+      <RangeControl
+        label="Opacity"
+        value={settings.opacity}
+        min={0.25}
+        max={1}
+        step={0.01}
+        format={(v) => `${Math.round(v * 100)}%`}
+        onChange={(v) => updateSettings({ opacity: v })}
+      />
+      <div className="space-y-2 rounded-xl border border-black/5 bg-white p-3">
+        <div className="flex items-center justify-between">
+          <Label>Shadow</Label>
+          <input
+            type="checkbox"
+            checked={settings.shadowEnabled}
+            onChange={(e) => updateSettings({ shadowEnabled: e.target.checked })}
+            className="h-4 w-4 accent-blue-500"
+          />
+        </div>
+        <RangeControl
+          label="Blur"
+          value={settings.shadowBlur}
+          min={0}
+          max={72}
+          step={1}
+          onChange={(v) => updateSettings({ shadowBlur: v })}
+        />
+        <RangeControl
+          label="Opacity"
+          value={settings.shadowOpacity}
+          min={0}
+          max={0.7}
+          step={0.01}
+          format={(v) => `${Math.round(v * 100)}%`}
+          onChange={(v) => updateSettings({ shadowOpacity: v })}
+        />
+        <RangeControl
+          label="Y offset"
+          value={settings.shadowOffsetY}
+          min={-20}
+          max={60}
+          step={1}
+          onChange={(v) => updateSettings({ shadowOffsetY: v })}
+        />
+      </div>
+      <div className="space-y-3 rounded-xl border border-black/5 bg-white p-3">
+        <div className="flex items-center justify-between">
+          <Label>Outline</Label>
+          <input
+            type="checkbox"
+            checked={settings.outlineEnabled}
+            onChange={(e) => updateSettings({ outlineEnabled: e.target.checked })}
+            className="h-4 w-4 accent-blue-500"
+          />
+        </div>
+        <ColorPicker
+          label="Outline color"
+          value={settings.outlineColor}
+          onChange={(outlineColor) => updateSettings({ outlineColor })}
+        />
+        <RangeControl
+          label="Width"
+          value={settings.outlineWidth}
+          min={1}
+          max={12}
+          step={1}
+          onChange={(v) => updateSettings({ outlineWidth: v })}
+        />
+      </div>
+      <div className="space-y-1.5">
+        <Label>Tags for gallery filters</Label>
+        <Input
+          value={tagText}
+          placeholder="work, blue, client"
+          onChange={(e) => setTagText(e.target.value)}
+          onBlur={() =>
+            setTags(
+              tagText
+                .split(",")
+                .map((tag) => tag.trim())
+                .filter(Boolean)
+            )
+          }
+        />
+      </div>
       <p className="text-xs leading-relaxed text-muted-foreground">
-        The folder back is ~16% darker than the base; the front gets a soft
-        top-to-bottom gradient. Use the eyedropper to sample any pixel on
-        screen.
+        Tune color, gradient, opacity, shadow, outline, and tags. All changes
+        update the folder preview instantly and persist on this device.
       </p>
+    </div>
+  );
+}
+
+const FOLDER_STYLES: { value: FolderStyle; label: string }[] = [
+  { value: "finder", label: "Finder" },
+  { value: "soft", label: "Soft" },
+  { value: "glass", label: "Glass" },
+  { value: "flat", label: "Flat" },
+];
+
+function RangeControl({
+  label,
+  value,
+  min,
+  max,
+  step,
+  format = (v) => String(v),
+  onChange,
+}: {
+  label: string;
+  value: number;
+  min: number;
+  max: number;
+  step: number;
+  format?: (value: number) => string;
+  onChange: (value: number) => void;
+}) {
+  return (
+    <div className="space-y-1.5">
+      <div className="flex items-center justify-between gap-3">
+        <Label className="text-[12px] text-neutral-600">{label}</Label>
+        <span className="text-[11px] tabular-nums text-neutral-500">{format(value)}</span>
+      </div>
+      <Slider
+        value={[value]}
+        min={min}
+        max={max}
+        step={step}
+        onValueChange={(v) => onChange(v[0])}
+      />
     </div>
   );
 }
@@ -541,5 +722,4 @@ function LayersTab() {
     </div>
   );
 }
-
 

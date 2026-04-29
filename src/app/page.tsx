@@ -78,7 +78,7 @@ export default function HomePage() {
               <Link href="/editor">Open editor <ArrowRight className="ml-2 h-4 w-4" /></Link>
             </Button>
             <Button asChild variant="secondary" size="lg" className="rounded-full">
-              <Link href="/templates">Browse 30 templates</Link>
+              <Link href="/gallery">Open gallery</Link>
             </Button>
           </div>
         </div>
@@ -132,9 +132,9 @@ export default function HomePage() {
       </section>
 
       <section className="container grid gap-3 py-16 md:grid-cols-3">
-        <Feature Icon={FolderTree} title="Big Sur fidelity" body="Two-path folder with rim highlight, inner shadow, and color-aware gradients." />
-        <Feature Icon={FileJson} title="Open project format" body="Templates ship as JSON. Bring your own — version control your icon library." />
-        <Feature Icon={Download} title="Export everywhere" body="PNG 512/1024 plus full .icns with all standard sizes — generated in your browser." />
+        <Feature Icon={FolderTree} title="Finder-grade editor" body="Choose style, color, gradient, brightness, opacity, shadow, outline, emoji, symbols, text, and images." />
+        <Feature Icon={FileJson} title="Persistent local gallery" body="Save unlimited design variants on this device, then search, tag, filter, edit, duplicate, or delete them later." />
+        <Feature Icon={Download} title="Export everywhere" body="Transparent PNG 512/1024, lightweight SVG preview, clipboard copy, and .icns generated in your browser." />
       </section>
 
       <SiteFooter />

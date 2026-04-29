@@ -1,5 +1,6 @@
 export type LayerType = "emoji" | "symbol" | "image" | "text";
 export type LayerZone = "inside" | "badge";
+export type FolderStyle = "finder" | "soft" | "glass" | "flat";
 export type BlendMode =
   | "source-over"
   | "multiply"
@@ -75,10 +76,26 @@ export interface TextLayer extends BaseLayer {
 
 export type Layer = EmojiLayer | SymbolLayer | ImageLayer | TextLayer;
 
+export interface FolderSettings {
+  style: FolderStyle;
+  gradientStrength: number;
+  brightness: number;
+  opacity: number;
+  shadowEnabled: boolean;
+  shadowBlur: number;
+  shadowOpacity: number;
+  shadowOffsetY: number;
+  outlineEnabled: boolean;
+  outlineColor: string;
+  outlineWidth: number;
+  tags: string[];
+}
+
 export interface FolderProject {
   id: string;
   name: string;
   baseColor: string;
+  settings: FolderSettings;
   layers: Layer[];
   createdAt: number;
   updatedAt: number;
@@ -119,3 +136,18 @@ export const DEFAULT_LAYER_PROPS: Pick<
 };
 
 export const DEFAULT_BASE_COLOR = "#5BB0FF";
+
+export const DEFAULT_FOLDER_SETTINGS: FolderSettings = {
+  style: "finder",
+  gradientStrength: 1,
+  brightness: 0,
+  opacity: 1,
+  shadowEnabled: true,
+  shadowBlur: 32,
+  shadowOpacity: 0.35,
+  shadowOffsetY: 18,
+  outlineEnabled: false,
+  outlineColor: "#FFFFFF",
+  outlineWidth: 3,
+  tags: [],
+};

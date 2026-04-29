@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 
 const links: Array<{ href: string; label: string }> = [
   { href: "/editor", label: "Editor" },
+  { href: "/gallery", label: "Gallery" },
   { href: "/templates", label: "Templates" },
   { href: "/bulk", label: "Bulk" },
   { href: "/how-to-apply", label: "How to apply" },
