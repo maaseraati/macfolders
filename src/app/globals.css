@@ -1,0 +1,117 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 0 0% 100%;
+    --foreground: 222.2 84% 6%;
+    --card: 0 0% 100%;
+    --card-foreground: 222.2 84% 6%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 222.2 84% 6%;
+    --primary: 211 100% 50%;
+    --primary-foreground: 0 0% 100%;
+    --secondary: 220 14% 96%;
+    --secondary-foreground: 222 47% 11%;
+    --muted: 220 14% 96%;
+    --muted-foreground: 220 9% 46%;
+    --accent: 220 14% 94%;
+    --accent-foreground: 222 47% 11%;
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 0 0% 100%;
+    --border: 220 13% 91%;
+    --input: 220 13% 91%;
+    --ring: 211 100% 50%;
+    --radius: 0.6rem;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground;
+    font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "SF Pro Display", "Inter", "Helvetica Neue", Arial, sans-serif;
+    font-feature-settings: "rlig" 1, "calt" 1;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+  html {
+    color-scheme: light;
+  }
+}
+
+@layer utilities {
+  .glass {
+    background: rgba(255, 255, 255, 0.72);
+    backdrop-filter: saturate(180%) blur(22px);
+    -webkit-backdrop-filter: saturate(180%) blur(22px);
+    border: 1px solid rgba(0, 0, 0, 0.06);
+  }
+  .glass-strong {
+    background: rgba(255, 255, 255, 0.85);
+    backdrop-filter: saturate(180%) blur(28px);
+    -webkit-backdrop-filter: saturate(180%) blur(28px);
+    border: 1px solid rgba(0, 0, 0, 0.08);
+  }
+  .ring-mac {
+    box-shadow: 0 1px 0 0 rgba(255, 255, 255, 0.7) inset, 0 0 0 0.5px rgba(0, 0, 0, 0.08), 0 22px 50px -12px rgba(0, 0, 0, 0.35);
+  }
+}
+
+/* Native macOS form styling — used in the Inspector. Rows of label/value
+   that look like System Settings or Finder “Get Info”. */
+.mac-section + .mac-section {
+  border-top: 1px solid rgba(0, 0, 0, 0.06);
+  margin-top: 12px;
+  padding-top: 12px;
+}
+.mac-section-title {
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: rgba(60, 60, 67, 0.6);
+  margin-bottom: 6px;
+}
+.mac-row {
+  display: grid;
+  grid-template-columns: 84px 1fr;
+  align-items: center;
+  gap: 10px;
+  min-height: 28px;
+}
+.mac-row > label,
+.mac-row > .mac-row-label {
+  font-size: 12px;
+  color: rgba(60, 60, 67, 0.78);
+  text-align: right;
+  font-weight: 500;
+}
+
+.checkerboard {
+  background-image:
+    linear-gradient(45deg, hsl(var(--muted)) 25%, transparent 25%),
+    linear-gradient(-45deg, hsl(var(--muted)) 25%, transparent 25%),
+    linear-gradient(45deg, transparent 75%, hsl(var(--muted)) 75%),
+    linear-gradient(-45deg, transparent 75%, hsl(var(--muted)) 75%);
+  background-size: 24px 24px;
+  background-position: 0 0, 0 12px, 12px -12px, -12px 0px;
+}
+
+.scrollbar-thin::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+.scrollbar-thin::-webkit-scrollbar-track {
+  background: transparent;
+}
+.scrollbar-thin::-webkit-scrollbar-thumb {
+  background: hsl(var(--border));
+  border-radius: 4px;
+}
+.scrollbar-thin::-webkit-scrollbar-thumb:hover {
+  background: hsl(var(--muted-foreground));
+}
