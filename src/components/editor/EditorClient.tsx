@@ -90,44 +90,54 @@ export function EditorClient() {
   }, [undo, redo, selectedLayerId, removeLayer, duplicateLayer]);
 
   return (
-    <div className="flex h-screen flex-col overflow-hidden bg-background text-foreground">
-      <header className="flex h-12 items-center gap-3 border-b border-border/60 px-3">
-        <Link href="/" className="flex items-center gap-1.5 text-sm font-semibold">
+    <div
+      className="flex h-screen flex-col overflow-hidden text-foreground"
+      style={{
+        background:
+          "radial-gradient(60% 80% at 50% 0%, rgba(120,170,255,0.22), rgba(255,255,255,0) 70%), radial-gradient(40% 60% at 90% 100%, rgba(255,160,220,0.18), rgba(255,255,255,0) 70%), linear-gradient(180deg, #f3f5fa 0%, #ecedf3 100%)",
+      }}
+    >
+      <header className="flex h-12 items-center gap-2 border-b border-black/5 bg-white/60 px-3 backdrop-blur supports-[backdrop-filter]:bg-white/55">
+        <Link href="/" className="flex items-center gap-1.5 text-sm font-semibold tracking-tight">
           <span className="grid h-6 w-6 place-items-center rounded-md bg-primary/15 text-primary">
             <Folder className="h-3.5 w-3.5" />
           </span>
           MacFolders
         </Link>
-        <Separator orientation="vertical" className="h-6" />
+        <Separator orientation="vertical" className="mx-1 h-6" />
         <Input
           value={project.name}
           onChange={(e) => setName(e.target.value)}
-          className="h-8 max-w-[260px]"
+          className="h-8 max-w-[260px] rounded-lg"
           aria-label="Folder name"
         />
-        <Button variant="ghost" size="sm" onClick={() => resetProject()}>
+        <Button variant="ghost" size="sm" className="rounded-lg" onClick={() => resetProject()}>
           <Plus className="mr-1.5 h-3.5 w-3.5" /> New
         </Button>
-        <Button
-          variant="ghost"
-          size="sm"
-          aria-label="Undo"
-          disabled={past.length === 0}
-          onClick={undo}
-        >
-          <Undo className="h-4 w-4" />
-        </Button>
-        <Button
-          variant="ghost"
-          size="sm"
-          aria-label="Redo"
-          disabled={future.length === 0}
-          onClick={redo}
-        >
-          <Redo className="h-4 w-4" />
-        </Button>
+        <div className="ml-1 flex items-center rounded-lg bg-black/5 p-0.5">
+          <Button
+            variant="ghost"
+            size="sm"
+            aria-label="Undo"
+            disabled={past.length === 0}
+            onClick={undo}
+            className="h-7 w-7 rounded-md p-0"
+          >
+            <Undo className="h-4 w-4" />
+          </Button>
+          <Button
+            variant="ghost"
+            size="sm"
+            aria-label="Redo"
+            disabled={future.length === 0}
+            onClick={redo}
+            className="h-7 w-7 rounded-md p-0"
+          >
+            <Redo className="h-4 w-4" />
+          </Button>
+        </div>
         <div className="ml-auto flex items-center gap-2">
-          <Button asChild variant="ghost" size="sm">
+          <Button asChild variant="ghost" size="sm" className="rounded-lg">
             <Link href="/templates"><Sparkles className="mr-1.5 h-3.5 w-3.5" /> Templates</Link>
           </Button>
           <MyFoldersDrawer />
@@ -135,26 +145,29 @@ export function EditorClient() {
         </div>
       </header>
 
-      <div className="grid flex-1 grid-cols-[280px_minmax(0,1fr)_320px] overflow-hidden">
-        <aside className="overflow-hidden border-r border-border/60 bg-card/40">
+      <div className="grid flex-1 grid-cols-[300px_minmax(0,1fr)_320px] gap-3 overflow-hidden p-3">
+        <aside className="overflow-hidden rounded-2xl border border-black/5 bg-white/70 shadow-sm backdrop-blur">
           <ToolPanel />
         </aside>
-        <main className="flex flex-1 flex-col items-center gap-6 overflow-y-auto bg-gradient-to-b from-background to-secondary/40 p-6">
-          <div className="checkerboard rounded-xl border border-border/40 p-2 shadow-2xl">
-            <FolderCanvas size={540} onStageReady={setStage} />
+
+        <main className="flex min-h-0 flex-col items-center gap-3 overflow-hidden">
+          <div className="relative flex flex-1 w-full min-h-0 items-center justify-center overflow-hidden rounded-2xl border border-black/5 bg-white/50 p-4 shadow-sm backdrop-blur">
+            <div className="checkerboard rounded-xl ring-1 ring-black/5">
+              <FolderCanvas size={560} onStageReady={setStage} />
+            </div>
+            <p className="pointer-events-none absolute bottom-2 left-1/2 -translate-x-1/2 text-[10px] text-neutral-500/80">
+              Drag, resize and rotate directly · ⌘D duplicate · ⌘Z undo · Delete remove
+            </p>
           </div>
           <PreviewStrip stage={stage} stageVersion={stageVersion} />
-          <p className="max-w-md text-center text-xs text-muted-foreground">
-            Drag, resize and rotate layers directly. Shortcuts: V move, T text, Cmd/Ctrl+D duplicate,
-            Cmd/Ctrl+Z undo, Shift+Cmd/Ctrl+Z redo, Delete to remove.
-          </p>
         </main>
-        <aside className="overflow-y-auto border-l border-border/60 bg-card/40">
+
+        <aside className="overflow-y-auto rounded-2xl border border-black/5 bg-white/70 shadow-sm backdrop-blur">
           <Inspector />
         </aside>
       </div>
 
-      <div className="flex h-7 items-center justify-between border-t border-border/60 px-3 text-[10px] text-muted-foreground">
+      <div className="flex h-7 items-center justify-between border-t border-black/5 bg-white/60 px-3 text-[10px] text-muted-foreground backdrop-blur">
         <span>Auto-saving to localStorage</span>
         <span>{project.layers.length} layer{project.layers.length === 1 ? "" : "s"}</span>
       </div>

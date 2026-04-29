@@ -32,7 +32,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { Slider } from "@/components/ui/slider";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { ColorPicker } from "./ColorPicker";
-import { POPULAR_EMOJI } from "@/lib/emoji";
+import { POPULAR_EMOJI, emojiToAppleUrl } from "@/lib/emoji";
 import { SYMBOL_LIBRARY } from "@/lib/symbols";
 import { useEditorStore } from "@/lib/store";
 import { DEFAULT_LAYER_PROPS } from "@/lib/types";
@@ -88,12 +88,19 @@ export function ToolPanel() {
 function ColorTab() {
   const baseColor = useEditorStore((s) => s.project.baseColor);
   const setBaseColor = useEditorStore((s) => s.setBaseColor);
+  const setBaseColorLive = useEditorStore((s) => s.setBaseColorLive);
   return (
     <div className="space-y-4">
-      <ColorPicker label="Base color" value={baseColor} onChange={setBaseColor} />
-      <p className="text-xs text-muted-foreground">
+      <ColorPicker
+        label="Base color"
+        value={baseColor}
+        onChange={setBaseColor}
+        onPreview={setBaseColorLive}
+      />
+      <p className="text-xs leading-relaxed text-muted-foreground">
         The folder back is rendered ~16% darker than the base; the front gets a
-        soft top-to-bottom gradient.
+        soft top-to-bottom gradient. Use the eyedropper to sample any pixel on
+        screen.
       </p>
     </div>
   );
@@ -122,7 +129,9 @@ function EmojiTab() {
           <button
             key={emoji}
             type="button"
-            className="grid h-9 w-9 place-items-center rounded-md text-2xl transition-colors hover:bg-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+            aria-label={emoji}
+            title={emoji}
+            className="grid h-9 w-9 place-items-center rounded-xl transition-colors hover:bg-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
             onClick={() =>
               addLayer({
                 ...DEFAULT_LAYER_PROPS,
@@ -134,12 +143,18 @@ function EmojiTab() {
               } as never)
             }
           >
-            {emoji}
+            <img
+              src={emojiToAppleUrl(emoji)}
+              alt=""
+              loading="lazy"
+              draggable={false}
+              className="h-6 w-6 select-none"
+            />
           </button>
         ))}
       </div>
       <p className="text-xs text-muted-foreground">
-        Emoji are rendered with Twemoji for cross-platform consistency.
+        Emoji rendered in Apple style for a native macOS look.
       </p>
     </div>
   );

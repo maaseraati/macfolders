@@ -38,6 +38,7 @@ interface EditorState {
   hydrated: boolean;
   setName: (name: string) => void;
   setBaseColor: (hex: string) => void;
+  setBaseColorLive: (hex: string) => void;
   selectLayer: (id: string | null) => void;
   addLayer: (layer: Omit<Layer, "id">) => string;
   updateLayer: (id: string, patch: Partial<Layer>) => void;
@@ -114,6 +115,17 @@ export const useEditorStore = create<EditorState>((set, get) => ({
     const project = { ...state.project, baseColor: hex, updatedAt: Date.now() };
     persistCurrent(project);
     set({ project, past, future: [] });
+  },
+
+  /**
+   * Same as setBaseColor but without committing to the history stack.
+   * Used for live previews while the user drags inside the native color
+   * picker so we don't allocate a history entry per pixel of hue change.
+   */
+  setBaseColorLive: (hex: string) => {
+    const state = get();
+    const project = { ...state.project, baseColor: hex, updatedAt: Date.now() };
+    set({ project });
   },
 
   selectLayer: (id) => set({ selectedLayerId: id }),

@@ -4,7 +4,15 @@ import * as React from "react";
 import type Konva from "konva";
 import { STAGE_SIZE } from "@/lib/folder-paths";
 
-const SIZES = [512, 128, 32, 16];
+const SIZES = [512, 128, 32, 16] as const;
+
+/** Visual on-screen sizes for each preview tile (kept compact, single row). */
+const DISPLAY: Record<(typeof SIZES)[number], number> = {
+  512: 96,
+  128: 64,
+  32: 40,
+  16: 24,
+};
 
 interface PreviewStripProps {
   stage: Konva.Stage | null;
@@ -39,27 +47,29 @@ export function PreviewStrip({ stage, stageVersion }: PreviewStripProps) {
   }, [stage, stageVersion]);
 
   return (
-    <div className="flex flex-wrap items-end justify-center gap-4">
-      {SIZES.map((size) => (
-        <div key={size} className="flex flex-col items-center gap-1">
-          <div
-            className="checkerboard rounded-md border border-border/40"
-            style={{ width: size, height: size, maxWidth: 256 }}
-          >
-            {previews[size] ? (
-              <img
-                src={previews[size]}
-                width={Math.min(size, 256)}
-                height={Math.min(size, 256)}
-                alt={`Preview ${size}`}
-                className="rounded-md"
-                style={{ imageRendering: size <= 32 ? "pixelated" : "auto" }}
-              />
-            ) : null}
+    <div className="flex items-end justify-center gap-3 rounded-2xl glass px-4 py-2">
+      {SIZES.map((size) => {
+        const display = DISPLAY[size];
+        return (
+          <div key={size} className="flex flex-col items-center gap-1">
+            <div
+              className="checkerboard grid place-items-center overflow-hidden rounded-md ring-1 ring-black/5"
+              style={{ width: display, height: display }}
+            >
+              {previews[size] ? (
+                <img
+                  src={previews[size]}
+                  width={display}
+                  height={display}
+                  alt={`Preview ${size}`}
+                  style={{ imageRendering: size <= 32 ? "pixelated" : "auto" }}
+                />
+              ) : null}
+            </div>
+            <span className="text-[10px] tabular-nums text-muted-foreground">{size}</span>
           </div>
-          <span className="text-[10px] text-muted-foreground">{size}px</span>
-        </div>
-      ))}
+        );
+      })}
     </div>
   );
 }
