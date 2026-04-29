@@ -104,14 +104,14 @@ const COMMON_HANDLERS = (
   onTransformStart: () => onSaveSnapshot(),
   onTransformEnd: (e: Konva.KonvaEventObject<Event>) => {
     const node = e.target;
-    const newScale = node.scaleX();
-    const merged = Math.max(0.1, Math.min(20, layer.scale * newScale));
-    node.scaleX(layer.scale);
-    node.scaleY(layer.scale);
+    // node.scaleX() already returns the final, fully-multiplied scale that
+    // Konva mutated on the node during the transform. Don't multiply it by
+    // layer.scale again — that's what made small drags blow up to giants.
+    const finalScale = Math.max(0.1, Math.min(12, Math.abs(node.scaleX())));
     onChange({
       x: node.x(),
       y: node.y(),
-      scale: merged,
+      scale: finalScale,
       rotation: node.rotation(),
     });
   },

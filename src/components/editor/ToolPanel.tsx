@@ -32,7 +32,8 @@ import { Textarea } from "@/components/ui/textarea";
 import { Slider } from "@/components/ui/slider";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { ColorPicker } from "./ColorPicker";
-import { POPULAR_EMOJI, emojiToAppleUrl } from "@/lib/emoji";
+import { emojiToAppleUrl } from "@/lib/emoji";
+import { EMOJI_GROUPS } from "@/lib/emoji-data";
 import { SYMBOL_LIBRARY } from "@/lib/symbols";
 import { useEditorStore } from "@/lib/store";
 import { DEFAULT_LAYER_PROPS } from "@/lib/types";
@@ -46,39 +47,41 @@ const TEMPLATES = templates as TemplateDefinition[];
 const TAB_TRIGGERS: { value: string; label: string; Icon: typeof Palette }[] = [
   { value: "color", label: "Color", Icon: Palette },
   { value: "emoji", label: "Emoji", Icon: Smile },
-  { value: "symbol", label: "Symbols", Icon: Shapes },
+  { value: "symbol", label: "Icons", Icon: Shapes },
   { value: "text", label: "Text", Icon: TypeIcon },
   { value: "image", label: "Image", Icon: ImagePlus },
-  { value: "templates", label: "Templates", Icon: LayoutTemplate },
+  { value: "templates", label: "Saved", Icon: LayoutTemplate },
   { value: "layers", label: "Layers", Icon: LayersIcon },
 ];
 
 export function ToolPanel() {
   return (
     <Tabs defaultValue="color" className="flex h-full flex-col">
-      <TabsList className="grid h-auto grid-cols-7 gap-0.5 p-1">
-        {TAB_TRIGGERS.map(({ value, label, Icon }) => (
-          <TabsTrigger
-            key={value}
-            value={value}
-            className="flex flex-col items-center gap-1 py-1.5"
-            aria-label={label}
-            title={label}
-          >
-            <Icon className="h-4 w-4" />
-            <span className="text-[10px] leading-none">{label}</span>
-          </TabsTrigger>
-        ))}
-      </TabsList>
+      <div className="border-b border-black/5 bg-white px-2 pt-2">
+        <TabsList className="h-auto w-full justify-between gap-0.5 bg-transparent p-0">
+          {TAB_TRIGGERS.map(({ value, label, Icon }) => (
+            <TabsTrigger
+              key={value}
+              value={value}
+              className="flex h-12 min-w-0 flex-1 flex-col items-center justify-center gap-0.5 rounded-lg !px-0 text-neutral-600 transition-colors data-[state=active]:bg-blue-500/10 data-[state=active]:text-blue-600 data-[state=active]:shadow-none"
+              aria-label={label}
+              title={label}
+            >
+              <Icon className="h-[18px] w-[18px]" />
+              <span className="text-[10px] font-medium leading-none">{label}</span>
+            </TabsTrigger>
+          ))}
+        </TabsList>
+      </div>
       <ScrollArea className="flex-1">
         <div className="p-3">
-          <TabsContent value="color"><ColorTab /></TabsContent>
-          <TabsContent value="emoji"><EmojiTab /></TabsContent>
-          <TabsContent value="symbol"><SymbolTab /></TabsContent>
-          <TabsContent value="text"><TextTab /></TabsContent>
-          <TabsContent value="image"><ImageTab /></TabsContent>
-          <TabsContent value="templates"><TemplatesTab /></TabsContent>
-          <TabsContent value="layers"><LayersTab /></TabsContent>
+          <TabsContent value="color" className="m-0"><ColorTab /></TabsContent>
+          <TabsContent value="emoji" className="m-0"><EmojiTab /></TabsContent>
+          <TabsContent value="symbol" className="m-0"><SymbolTab /></TabsContent>
+          <TabsContent value="text" className="m-0"><TextTab /></TabsContent>
+          <TabsContent value="image" className="m-0"><ImageTab /></TabsContent>
+          <TabsContent value="templates" className="m-0"><TemplatesTab /></TabsContent>
+          <TabsContent value="layers" className="m-0"><LayersTab /></TabsContent>
         </div>
       </ScrollArea>
     </Tabs>
@@ -88,18 +91,12 @@ export function ToolPanel() {
 function ColorTab() {
   const baseColor = useEditorStore((s) => s.project.baseColor);
   const setBaseColor = useEditorStore((s) => s.setBaseColor);
-  const setBaseColorLive = useEditorStore((s) => s.setBaseColorLive);
   return (
     <div className="space-y-4">
-      <ColorPicker
-        label="Base color"
-        value={baseColor}
-        onChange={setBaseColor}
-        onPreview={setBaseColorLive}
-      />
+      <ColorPicker label="Base color" value={baseColor} onChange={setBaseColor} />
       <p className="text-xs leading-relaxed text-muted-foreground">
-        The folder back is rendered ~16% darker than the base; the front gets a
-        soft top-to-bottom gradient. Use the eyedropper to sample any pixel on
+        The folder back is ~16% darker than the base; the front gets a soft
+        top-to-bottom gradient. Use the eyedropper to sample any pixel on
         screen.
       </p>
     </div>
@@ -109,53 +106,71 @@ function ColorTab() {
 function EmojiTab() {
   const addLayer = useEditorStore((s) => s.addLayer);
   const [query, setQuery] = React.useState("");
-  const visible = React.useMemo(() => {
-    if (!query) return POPULAR_EMOJI;
+
+  const groups = React.useMemo(() => {
+    if (!query) return EMOJI_GROUPS;
     const q = query.toLowerCase();
-    return POPULAR_EMOJI.filter((e) => e.includes(q));
+    return EMOJI_GROUPS.map((g) => ({
+      name: g.name,
+      emoji: g.emoji.filter(
+        (e) => e.includes(q) || g.name.toLowerCase().includes(q)
+      ),
+    })).filter((g) => g.emoji.length > 0);
   }, [query]);
+
+  const onPick = (emoji: string) =>
+    addLayer({
+      ...DEFAULT_LAYER_PROPS,
+      type: "emoji",
+      name: emoji,
+      emoji,
+      scale: 1.6,
+      y: 600,
+    } as never);
+
   return (
-    <div className="space-y-3">
+    <div className="flex h-full flex-col gap-3">
       <div className="space-y-1">
-        <Label>Pick or type an emoji</Label>
+        <Label>Pick an emoji</Label>
         <Input
-          placeholder="🔍 Filter..."
+          placeholder="Filter…"
           value={query}
           onChange={(e) => setQuery(e.target.value)}
         />
       </div>
-      <div className="grid grid-cols-8 gap-1">
-        {visible.map((emoji) => (
-          <button
-            key={emoji}
-            type="button"
-            aria-label={emoji}
-            title={emoji}
-            className="grid h-9 w-9 place-items-center rounded-xl transition-colors hover:bg-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
-            onClick={() =>
-              addLayer({
-                ...DEFAULT_LAYER_PROPS,
-                type: "emoji",
-                name: emoji,
-                emoji,
-                scale: 1.6,
-                y: 600,
-              } as never)
-            }
-          >
-            <img
-              src={emojiToAppleUrl(emoji)}
-              alt=""
-              loading="lazy"
-              draggable={false}
-              className="h-6 w-6 select-none"
-            />
-          </button>
-        ))}
-      </div>
-      <p className="text-xs text-muted-foreground">
-        Emoji rendered in Apple style for a native macOS look.
-      </p>
+
+      <ScrollArea className="-mx-1 max-h-[calc(100vh-260px)] flex-1 px-1">
+        <div className="space-y-3 pb-3">
+          {groups.map((group) => (
+            <div key={group.name} className="space-y-1.5">
+              <p className="px-1 text-[11px] font-medium uppercase tracking-wide text-neutral-500">
+                {group.name}
+              </p>
+              <div className="grid grid-cols-8 gap-0.5">
+                {group.emoji.map((emoji) => (
+                  <button
+                    key={`${group.name}-${emoji}`}
+                    type="button"
+                    aria-label={emoji}
+                    title={emoji}
+                    className="grid h-8 w-8 place-items-center rounded-lg transition-colors hover:bg-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+                    onClick={() => onPick(emoji)}
+                  >
+                    <img
+                      src={emojiToAppleUrl(emoji)}
+                      alt=""
+                      loading="lazy"
+                      decoding="async"
+                      draggable={false}
+                      className="h-5 w-5 select-none"
+                    />
+                  </button>
+                ))}
+              </div>
+            </div>
+          ))}
+        </div>
+      </ScrollArea>
     </div>
   );
 }

@@ -90,14 +90,8 @@ export function EditorClient() {
   }, [undo, redo, selectedLayerId, removeLayer, duplicateLayer]);
 
   return (
-    <div
-      className="flex h-screen flex-col overflow-hidden text-foreground"
-      style={{
-        background:
-          "radial-gradient(60% 80% at 50% 0%, rgba(120,170,255,0.22), rgba(255,255,255,0) 70%), radial-gradient(40% 60% at 90% 100%, rgba(255,160,220,0.18), rgba(255,255,255,0) 70%), linear-gradient(180deg, #f3f5fa 0%, #ecedf3 100%)",
-      }}
-    >
-      <header className="flex h-12 items-center gap-2 border-b border-black/5 bg-white/60 px-3 backdrop-blur supports-[backdrop-filter]:bg-white/55">
+    <div className="flex h-screen flex-col overflow-hidden bg-[#f5f5f7] text-foreground">
+      <header className="flex h-12 items-center gap-2 border-b border-black/5 bg-white px-3">
         <Link href="/" className="flex items-center gap-1.5 text-sm font-semibold tracking-tight">
           <span className="grid h-6 w-6 place-items-center rounded-md bg-primary/15 text-primary">
             <Folder className="h-3.5 w-3.5" />
@@ -145,29 +139,31 @@ export function EditorClient() {
         </div>
       </header>
 
-      <div className="grid flex-1 grid-cols-[300px_minmax(0,1fr)_320px] gap-3 overflow-hidden p-3">
-        <aside className="overflow-hidden rounded-2xl border border-black/5 bg-white/70 shadow-sm backdrop-blur">
+      <div className="grid flex-1 grid-cols-[300px_minmax(0,1fr)_320px] gap-2 overflow-hidden p-2">
+        <aside className="overflow-hidden rounded-xl border border-black/5 bg-white shadow-sm">
           <ToolPanel />
         </aside>
 
-        <main className="flex min-h-0 flex-col items-center gap-3 overflow-hidden">
-          <div className="relative flex flex-1 w-full min-h-0 items-center justify-center overflow-hidden rounded-2xl border border-black/5 bg-white/50 p-4 shadow-sm backdrop-blur">
-            <div className="checkerboard rounded-xl ring-1 ring-black/5">
+        <main className="flex min-h-0 flex-col items-center gap-2 overflow-hidden">
+          <div className="relative flex flex-1 w-full min-h-0 items-center justify-center overflow-hidden rounded-xl border border-black/5 bg-white shadow-sm">
+            <div className="checkerboard rounded-lg ring-1 ring-black/5">
               <FolderCanvas size={560} onStageReady={setStage} />
             </div>
-            <p className="pointer-events-none absolute bottom-2 left-1/2 -translate-x-1/2 text-[10px] text-neutral-500/80">
+            <p className="pointer-events-none absolute bottom-2 left-1/2 -translate-x-1/2 text-[10px] text-neutral-500">
               Drag, resize and rotate directly · ⌘D duplicate · ⌘Z undo · Delete remove
             </p>
           </div>
-          <PreviewStrip stage={stage} stageVersion={stageVersion} />
+          <div className="w-full rounded-xl border border-black/5 bg-white px-3 py-2 shadow-sm">
+            <PreviewStrip stage={stage} stageVersion={stageVersion} />
+          </div>
         </main>
 
-        <aside className="overflow-y-auto rounded-2xl border border-black/5 bg-white/70 shadow-sm backdrop-blur">
+        <aside className="overflow-y-auto rounded-xl border border-black/5 bg-white shadow-sm">
           <Inspector />
         </aside>
       </div>
 
-      <div className="flex h-7 items-center justify-between border-t border-black/5 bg-white/60 px-3 text-[10px] text-muted-foreground backdrop-blur">
+      <div className="flex h-7 items-center justify-between border-t border-black/5 bg-white px-3 text-[10px] text-muted-foreground">
         <span>Auto-saving to localStorage</span>
         <span>{project.layers.length} layer{project.layers.length === 1 ? "" : "s"}</span>
       </div>

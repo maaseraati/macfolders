@@ -47,7 +47,7 @@ export function PreviewStrip({ stage, stageVersion }: PreviewStripProps) {
   }, [stage, stageVersion]);
 
   return (
-    <div className="flex items-end justify-center gap-3 rounded-2xl glass px-4 py-2">
+    <div className="flex items-end justify-center gap-3">
       {SIZES.map((size) => {
         const display = DISPLAY[size];
         return (

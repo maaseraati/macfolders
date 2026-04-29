@@ -4,8 +4,15 @@ import * as React from "react";
 import { Stage, Layer as KonvaLayer, Transformer } from "react-konva";
 import type Konva from "konva";
 import { useEditorStore } from "@/lib/store";
-import { FolderBack, FolderFront } from "@/components/folder/FolderShape";
+import {
+  FolderBack,
+  FolderFront,
+  backStops,
+  frontStops,
+} from "@/components/folder/FolderShape";
 import { STAGE_SIZE } from "@/lib/folder-paths";
+import { shadeHex } from "@/lib/utils";
+import { liveColor } from "@/lib/live-color";
 import { LayerNode } from "./LayerNode";
 
 export { STAGE_SIZE };
@@ -30,6 +37,22 @@ export function FolderCanvas({ size = 540, onStageReady }: FolderCanvasProps) {
     onStageReady?.(stageRef.current);
     return () => onStageReady?.(null);
   }, [onStageReady]);
+
+  // Imperatively apply live color updates to the folder paths so dragging
+  // the OS color picker doesn't have to flow through the React store.
+  React.useEffect(() => {
+    return liveColor.subscribe((hex) => {
+      const stage = stageRef.current;
+      if (!stage) return;
+      const back = stage.findOne<Konva.Path>(".folder-back");
+      const front = stage.findOne<Konva.Path>(".folder-front");
+      const rim = stage.findOne<Konva.Path>(".folder-rim");
+      if (back) back.fillLinearGradientColorStops(backStops(hex));
+      if (front) front.fillLinearGradientColorStops(frontStops(hex));
+      if (rim) rim.stroke(shadeHex(hex, 22));
+      stage.batchDraw();
+    });
+  }, []);
 
   const registerNode = React.useCallback(
     (id: string, node: Konva.Node | null) => {
@@ -123,8 +146,9 @@ export function FolderCanvas({ size = 540, onStageReady }: FolderCanvasProps) {
           anchorStroke="#0a84ff"
           anchorFill="#ffffff"
           boundBoxFunc={(oldBox, newBox) => {
-            const minSide = 24;
-            const maxSide = STAGE_SIZE * 1.5;
+            const minSide = 16;
+            // Hard cap: never let a transform exceed the stage itself.
+            const maxSide = STAGE_SIZE;
             if (
               Math.abs(newBox.width) < minSide ||
               Math.abs(newBox.height) < minSide ||

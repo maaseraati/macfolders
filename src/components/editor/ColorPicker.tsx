@@ -5,6 +5,7 @@ import { Pipette } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { cn } from "@/lib/utils";
+import { liveColor } from "@/lib/live-color";
 
 const SWATCHES = [
   "#5BB0FF", "#7AB8FF", "#9CC6FF", "#7F8CFF", "#B97AFF",
@@ -16,12 +17,6 @@ const SWATCHES = [
 interface ColorPickerProps {
   value: string;
   onChange: (hex: string) => void;
-  /**
-   * Called frequently while the user is dragging inside the native color
-   * picker. Prefer to update the canvas without snapshotting history here.
-   * If omitted, falls back to onChange.
-   */
-  onPreview?: (hex: string) => void;
   label?: string;
 }
 
@@ -32,9 +27,9 @@ interface EyeDropperConstructor {
   new (): { open: () => Promise<EyeDropperResult> };
 }
 
-export function ColorPicker({ value, onChange, onPreview, label }: ColorPickerProps) {
+export function ColorPicker({ value, onChange, label }: ColorPickerProps) {
   const [text, setText] = React.useState(value.toUpperCase());
-  const previewRef = React.useRef<number | null>(null);
+  const [mounted, setMounted] = React.useState(false);
   const lastHexRef = React.useRef(value);
 
   React.useEffect(() => {
@@ -42,24 +37,23 @@ export function ColorPicker({ value, onChange, onPreview, label }: ColorPickerPr
     lastHexRef.current = value;
   }, [value]);
 
+  React.useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  // While the native picker is open we publish to the liveColor channel —
+  // this updates the Konva folder paths imperatively, bypassing React.
   const live = (hex: string) => {
     lastHexRef.current = hex;
-    if (previewRef.current != null) cancelAnimationFrame(previewRef.current);
-    previewRef.current = requestAnimationFrame(() => {
-      (onPreview ?? onChange)(hex);
-    });
+    liveColor.emit(hex);
   };
 
   const commit = (hex: string) => {
-    if (previewRef.current != null) {
-      cancelAnimationFrame(previewRef.current);
-      previewRef.current = null;
-    }
     onChange(hex);
   };
 
   const eyedropperAvailable =
-    typeof window !== "undefined" && "EyeDropper" in window;
+    mounted && typeof window !== "undefined" && "EyeDropper" in window;
 
   const pickWithEyedropper = async () => {
     if (!eyedropperAvailable) return;
@@ -78,7 +72,7 @@ export function ColorPicker({ value, onChange, onPreview, label }: ColorPickerPr
     <div className="space-y-3">
       {label ? <Label className="text-xs font-medium text-neutral-700">{label}</Label> : null}
 
-      <div className="flex items-center gap-2 rounded-2xl border border-border/60 bg-white/70 p-1.5 shadow-sm backdrop-blur">
+      <div className="flex items-center gap-2 rounded-xl border border-black/5 bg-neutral-50 p-1.5">
         <label className="relative grid h-9 w-9 cursor-pointer place-items-center overflow-hidden rounded-xl ring-1 ring-black/5">
           <span
             aria-hidden
