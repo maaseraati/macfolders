@@ -91,33 +91,47 @@ export function EditorClient() {
 
   return (
     <div className="flex h-screen flex-col overflow-hidden bg-[#f5f5f7] text-foreground">
-      <header className="flex h-12 items-center gap-2 border-b border-black/5 bg-white px-3">
-        <Link href="/" className="flex items-center gap-1.5 text-sm font-semibold tracking-tight">
-          <span className="grid h-6 w-6 place-items-center rounded-md bg-primary/15 text-primary">
-            <Folder className="h-3.5 w-3.5" />
+      <header className="flex h-11 items-center gap-2 border-b border-black/5 bg-white/95 px-3">
+        <div className="flex items-center gap-1.5">
+          <span className="block h-3 w-3 rounded-full bg-[#ff5f57]" />
+          <span className="block h-3 w-3 rounded-full bg-[#febc2e]" />
+          <span className="block h-3 w-3 rounded-full bg-[#28c840]" />
+        </div>
+        <Separator orientation="vertical" className="mx-1.5 h-5" />
+        <Link
+          href="/"
+          className="flex items-center gap-1.5 text-[13px] font-semibold tracking-tight text-neutral-800"
+        >
+          <span className="grid h-5 w-5 place-items-center rounded-md bg-primary/15 text-primary">
+            <Folder className="h-3 w-3" />
           </span>
           MacFolders
         </Link>
-        <Separator orientation="vertical" className="mx-1 h-6" />
+        <Separator orientation="vertical" className="mx-1.5 h-5" />
         <Input
           value={project.name}
           onChange={(e) => setName(e.target.value)}
-          className="h-8 max-w-[260px] rounded-lg"
+          className="h-7 max-w-[240px] rounded-md border-black/10 text-[12.5px]"
           aria-label="Folder name"
         />
-        <Button variant="ghost" size="sm" className="rounded-lg" onClick={() => resetProject()}>
-          <Plus className="mr-1.5 h-3.5 w-3.5" /> New
+        <Button
+          variant="ghost"
+          size="sm"
+          className="h-7 rounded-md px-2 text-[12px]"
+          onClick={() => resetProject()}
+        >
+          <Plus className="mr-1 h-3.5 w-3.5" /> New
         </Button>
-        <div className="ml-1 flex items-center rounded-lg bg-black/5 p-0.5">
+        <div className="ml-1 flex items-center rounded-md bg-black/[0.04] p-0.5">
           <Button
             variant="ghost"
             size="sm"
             aria-label="Undo"
             disabled={past.length === 0}
             onClick={undo}
-            className="h-7 w-7 rounded-md p-0"
+            className="h-6 w-6 rounded-[5px] p-0"
           >
-            <Undo className="h-4 w-4" />
+            <Undo className="h-3.5 w-3.5" />
           </Button>
           <Button
             variant="ghost"
@@ -125,14 +139,21 @@ export function EditorClient() {
             aria-label="Redo"
             disabled={future.length === 0}
             onClick={redo}
-            className="h-7 w-7 rounded-md p-0"
+            className="h-6 w-6 rounded-[5px] p-0"
           >
-            <Redo className="h-4 w-4" />
+            <Redo className="h-3.5 w-3.5" />
           </Button>
         </div>
-        <div className="ml-auto flex items-center gap-2">
-          <Button asChild variant="ghost" size="sm" className="rounded-lg">
-            <Link href="/templates"><Sparkles className="mr-1.5 h-3.5 w-3.5" /> Templates</Link>
+        <div className="ml-auto flex items-center gap-1.5">
+          <Button
+            asChild
+            variant="ghost"
+            size="sm"
+            className="h-7 rounded-md px-2 text-[12px]"
+          >
+            <Link href="/templates">
+              <Sparkles className="mr-1 h-3.5 w-3.5" /> Templates
+            </Link>
           </Button>
           <MyFoldersDrawer />
           <ExportMenu stage={stage} filename={project.name} />
@@ -163,9 +184,14 @@ export function EditorClient() {
         </aside>
       </div>
 
-      <div className="flex h-7 items-center justify-between border-t border-black/5 bg-white px-3 text-[10px] text-muted-foreground">
-        <span>Auto-saving to localStorage</span>
-        <span>{project.layers.length} layer{project.layers.length === 1 ? "" : "s"}</span>
+      <div className="flex h-7 items-center justify-between border-t border-black/5 bg-white px-3 text-[11px] tabular-nums text-neutral-500">
+        <span className="flex items-center gap-1.5">
+          <span className="block h-1.5 w-1.5 rounded-full bg-emerald-500" />
+          Auto-saved to this device
+        </span>
+        <span>
+          {project.layers.length} layer{project.layers.length === 1 ? "" : "s"}
+        </span>
       </div>
     </div>
   );

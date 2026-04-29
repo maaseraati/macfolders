@@ -193,12 +193,12 @@ function SymbolTab() {
           onChange={(e) => setQuery(e.target.value)}
         />
       </div>
-      <div className="grid grid-cols-6 gap-1">
+      <div className="grid grid-cols-6 gap-1.5">
         {filtered.slice(0, 90).map(({ name, component: Icon }) => (
           <button
             key={name}
             type="button"
-            className="grid aspect-square place-items-center rounded-md border border-border/30 bg-secondary/50 text-foreground/80 transition-colors hover:bg-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+            className="grid aspect-square place-items-center rounded-md border border-black/5 bg-white text-neutral-700 transition-colors hover:bg-neutral-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
             title={name}
             aria-label={name}
             onClick={() =>
@@ -219,7 +219,7 @@ function SymbolTab() {
           </button>
         ))}
       </div>
-      <p className="text-xs text-muted-foreground">
+      <p className="text-[11px] leading-snug text-neutral-500">
         Stand-in for SF Symbols. Real SF Symbols requires Apple licensing.
       </p>
     </div>
@@ -320,35 +320,28 @@ function ImageTab() {
   };
   return (
     <div className="space-y-3">
-      <Label>Upload an image</Label>
-      <input
-        type="file"
+      <UploadCard
+        title="Upload image"
+        subtitle="PNG, JPG, WEBP — keeps original background"
         accept="image/*"
-        className="block w-full text-xs file:mr-2 file:rounded-md file:border-0 file:bg-secondary file:px-3 file:py-1.5 file:text-secondary-foreground hover:file:bg-secondary/80"
         disabled={busy}
-        onChange={(e) => {
-          const file = e.target.files?.[0];
-          if (file) onUpload(file, false);
-        }}
+        onFile={(file) => onUpload(file, false)}
       />
-      <Label>or drop with background removed</Label>
-      <input
-        type="file"
+      <UploadCard
+        title="Upload + remove background"
+        subtitle="Runs in your browser — first run downloads the model"
+        accent
         accept="image/*"
-        className="block w-full text-xs file:mr-2 file:rounded-md file:border-0 file:bg-primary/10 file:px-3 file:py-1.5 file:text-primary hover:file:bg-primary/20"
         disabled={busy}
-        onChange={(e) => {
-          const file = e.target.files?.[0];
-          if (file) onUpload(file, true);
-        }}
+        onFile={(file) => onUpload(file, true)}
       />
       {busy ? (
-        <p className="flex items-center gap-2 text-xs text-muted-foreground">
-          <Loader2 className="h-3 w-3 animate-spin" /> Working… first run loads ML model.
+        <p className="flex items-center gap-2 text-[12px] text-neutral-600">
+          <Loader2 className="h-3.5 w-3.5 animate-spin" /> Working… first run loads ML model.
         </p>
       ) : null}
-      {error ? <p className="text-xs text-destructive">{error}</p> : null}
-      <p className="text-xs text-muted-foreground">
+      {error ? <p className="text-[12px] text-red-600">{error}</p> : null}
+      <p className="text-[11px] leading-snug text-neutral-500">
         Background removal runs entirely in your browser via @imgly/background-removal.
       </p>
     </div>
@@ -364,19 +357,65 @@ function TemplatesTab() {
           key={t.id}
           type="button"
           onClick={() => loadTemplate(t)}
-          className="group flex flex-col items-center rounded-md border border-border/30 bg-secondary/30 p-2 transition-colors hover:bg-accent"
+          className="group flex flex-col items-center rounded-lg border border-black/5 bg-white p-2 transition-colors hover:bg-neutral-50"
         >
           <FolderSvg
             baseColor={t.baseColor}
             emoji={(t.layers.find((l) => l.type === "emoji") as { emoji?: string } | undefined)?.emoji}
             size={64}
           />
-          <span className="mt-1 text-[10px] text-muted-foreground group-hover:text-foreground">
+          <span className="mt-1 truncate text-[11px] font-medium text-neutral-700 group-hover:text-neutral-900">
             {t.name}
           </span>
         </button>
       ))}
     </div>
+  );
+}
+
+function UploadCard({
+  title,
+  subtitle,
+  accent,
+  accept,
+  disabled,
+  onFile,
+}: {
+  title: string;
+  subtitle: string;
+  accent?: boolean;
+  accept: string;
+  disabled?: boolean;
+  onFile: (file: File) => void;
+}) {
+  const id = React.useId();
+  return (
+    <label
+      htmlFor={id}
+      className={cn(
+        "flex cursor-pointer flex-col rounded-xl border border-dashed px-3 py-2.5 transition-colors",
+        accent
+          ? "border-blue-300 bg-blue-50/60 hover:bg-blue-50"
+          : "border-black/15 bg-neutral-50 hover:bg-neutral-100",
+        disabled && "pointer-events-none opacity-60"
+      )}
+    >
+      <span className={cn("text-[12.5px] font-semibold", accent ? "text-blue-700" : "text-neutral-800")}>
+        {title}
+      </span>
+      <span className="text-[11px] leading-snug text-neutral-500">{subtitle}</span>
+      <input
+        id={id}
+        type="file"
+        accept={accept}
+        disabled={disabled}
+        className="sr-only"
+        onChange={(e) => {
+          const file = e.target.files?.[0];
+          if (file) onFile(file);
+        }}
+      />
+    </label>
   );
 }
 
@@ -391,86 +430,114 @@ function LayersTab() {
   const setZone = useEditorStore((s) => s.setZone);
   if (layers.length === 0) {
     return (
-      <p className="rounded-md border border-dashed border-border/50 p-4 text-center text-xs text-muted-foreground">
+      <p className="rounded-lg border border-dashed border-black/15 bg-neutral-50 p-4 text-center text-[12px] text-neutral-500">
         No layers yet. Add an emoji, symbol, image, or text from the other tabs.
       </p>
     );
   }
   return (
-    <div className="space-y-1">
-      {[...layers].reverse().map((layer) => (
-        <div
-          key={layer.id}
-          className={cn(
-            "flex items-center gap-1 rounded-md border border-border/30 bg-secondary/30 p-1.5 text-xs",
-            selectedId === layer.id && "ring-1 ring-primary"
-          )}
-        >
-          <button
-            type="button"
-            onClick={() => select(layer.id)}
-            className="flex-1 truncate text-left font-medium"
+    <div className="divide-y divide-black/5 overflow-hidden rounded-lg border border-black/5 bg-white">
+      {[...layers].reverse().map((layer) => {
+        const selected = selectedId === layer.id;
+        return (
+          <div
+            key={layer.id}
+            className={cn(
+              "flex flex-col gap-1.5 px-2.5 py-2 transition-colors",
+              selected ? "bg-blue-500/10" : "hover:bg-neutral-50"
+            )}
           >
-            <span className="text-muted-foreground">[{layer.type}]</span> {layer.name}
-          </button>
-          <button
-            type="button"
-            title="Toggle visibility"
-            className="grid h-6 w-6 place-items-center rounded hover:bg-accent"
-            onClick={() => toggle(layer.id, "hidden")}
-          >
-            {layer.hidden ? <EyeOff className="h-3 w-3" /> : <Eye className="h-3 w-3" />}
-          </button>
-          <button
-            type="button"
-            title="Toggle lock"
-            className="grid h-6 w-6 place-items-center rounded hover:bg-accent"
-            onClick={() => toggle(layer.id, "locked")}
-          >
-            {layer.locked ? <Lock className="h-3 w-3" /> : <Unlock className="h-3 w-3" />}
-          </button>
-          <button
-            type="button"
-            title={layer.zone === "inside" ? "Move to badge slot" : "Move inside folder"}
-            className="grid h-6 px-1 place-items-center rounded text-[10px] uppercase hover:bg-accent"
-            onClick={() => setZone(layer.id, layer.zone === "inside" ? "badge" : "inside")}
-          >
-            {layer.zone}
-          </button>
-          <button
-            type="button"
-            title="Move up"
-            className="grid h-6 w-6 place-items-center rounded hover:bg-accent"
-            onClick={() => reorder(layer.id, "up")}
-          >
-            <ChevronUp className="h-3 w-3" />
-          </button>
-          <button
-            type="button"
-            title="Move down"
-            className="grid h-6 w-6 place-items-center rounded hover:bg-accent"
-            onClick={() => reorder(layer.id, "down")}
-          >
-            <ChevronDown className="h-3 w-3" />
-          </button>
-          <button
-            type="button"
-            title="Duplicate"
-            className="grid h-6 w-6 place-items-center rounded hover:bg-accent"
-            onClick={() => duplicate(layer.id)}
-          >
-            <Copy className="h-3 w-3" />
-          </button>
-          <button
-            type="button"
-            title="Delete"
-            className="grid h-6 w-6 place-items-center rounded text-destructive hover:bg-destructive/10"
-            onClick={() => remove(layer.id)}
-          >
-            <Trash2 className="h-3 w-3" />
-          </button>
-        </div>
-      ))}
+            <div className="flex items-center gap-2">
+              <button
+                type="button"
+                onClick={() => select(layer.id)}
+                className="flex flex-1 items-center gap-2 truncate text-left"
+              >
+                <span
+                  className={cn(
+                    "rounded px-1.5 py-0.5 text-[9px] font-semibold uppercase tracking-wider",
+                    selected
+                      ? "bg-blue-600/15 text-blue-700"
+                      : "bg-neutral-100 text-neutral-500"
+                  )}
+                >
+                  {layer.type}
+                </span>
+                <span
+                  className={cn(
+                    "truncate text-[12px] font-medium",
+                    selected ? "text-blue-900" : "text-neutral-800"
+                  )}
+                >
+                  {layer.name}
+                </span>
+              </button>
+              <button
+                type="button"
+                title="Toggle visibility"
+                className="grid h-6 w-6 place-items-center rounded text-neutral-500 hover:bg-neutral-100 hover:text-neutral-800"
+                onClick={() => toggle(layer.id, "hidden")}
+              >
+                {layer.hidden ? <EyeOff className="h-3.5 w-3.5" /> : <Eye className="h-3.5 w-3.5" />}
+              </button>
+              <button
+                type="button"
+                title="Toggle lock"
+                className="grid h-6 w-6 place-items-center rounded text-neutral-500 hover:bg-neutral-100 hover:text-neutral-800"
+                onClick={() => toggle(layer.id, "locked")}
+              >
+                {layer.locked ? <Lock className="h-3.5 w-3.5" /> : <Unlock className="h-3.5 w-3.5" />}
+              </button>
+            </div>
+            {selected ? (
+              <div className="flex items-center gap-1">
+                <button
+                  type="button"
+                  title={layer.zone === "inside" ? "Move to badge slot" : "Move inside folder"}
+                  className="flex h-6 items-center rounded-md border border-black/5 bg-white px-2 text-[10px] font-medium uppercase tracking-wider text-neutral-600 hover:bg-neutral-50"
+                  onClick={() => setZone(layer.id, layer.zone === "inside" ? "badge" : "inside")}
+                >
+                  {layer.zone}
+                </button>
+                <div className="ml-auto flex items-center gap-0.5">
+                  <button
+                    type="button"
+                    title="Move up"
+                    className="grid h-6 w-6 place-items-center rounded text-neutral-600 hover:bg-neutral-100"
+                    onClick={() => reorder(layer.id, "up")}
+                  >
+                    <ChevronUp className="h-3.5 w-3.5" />
+                  </button>
+                  <button
+                    type="button"
+                    title="Move down"
+                    className="grid h-6 w-6 place-items-center rounded text-neutral-600 hover:bg-neutral-100"
+                    onClick={() => reorder(layer.id, "down")}
+                  >
+                    <ChevronDown className="h-3.5 w-3.5" />
+                  </button>
+                  <button
+                    type="button"
+                    title="Duplicate"
+                    className="grid h-6 w-6 place-items-center rounded text-neutral-600 hover:bg-neutral-100"
+                    onClick={() => duplicate(layer.id)}
+                  >
+                    <Copy className="h-3.5 w-3.5" />
+                  </button>
+                  <button
+                    type="button"
+                    title="Delete"
+                    className="grid h-6 w-6 place-items-center rounded text-red-500 hover:bg-red-500/10"
+                    onClick={() => remove(layer.id)}
+                  >
+                    <Trash2 className="h-3.5 w-3.5" />
+                  </button>
+                </div>
+              </div>
+            ) : null}
+          </div>
+        );
+      })}
     </div>
   );
 }
