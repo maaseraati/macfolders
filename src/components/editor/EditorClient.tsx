@@ -22,7 +22,6 @@ import { ExportMenu } from "./ExportMenu";
 import { MyFoldersDrawer } from "./MyFoldersDrawer";
 import templates from "@/data/templates.json";
 import type { TemplateDefinition } from "@/lib/types";
-import { ThemeToggle } from "@/components/site/theme-toggle";
 import Link from "next/link";
 
 const FolderCanvas = dynamic(
@@ -132,7 +131,6 @@ export function EditorClient() {
             <Link href="/templates"><Sparkles className="mr-1.5 h-3.5 w-3.5" /> Templates</Link>
           </Button>
           <MyFoldersDrawer />
-          <ThemeToggle />
           <ExportMenu stage={stage} filename={project.name} />
         </div>
       </header>

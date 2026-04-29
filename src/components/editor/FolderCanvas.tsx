@@ -116,12 +116,21 @@ export function FolderCanvas({ size = 540, onStageReady }: FolderCanvasProps) {
           ref={transformerRef}
           rotateEnabled
           ignoreStroke
-          anchorSize={12}
-          borderStroke="#3b82f6"
-          anchorStroke="#3b82f6"
+          anchorSize={14}
+          anchorCornerRadius={7}
+          borderStroke="#0a84ff"
+          borderStrokeWidth={2}
+          anchorStroke="#0a84ff"
           anchorFill="#ffffff"
           boundBoxFunc={(oldBox, newBox) => {
-            if (Math.abs(newBox.width) < 16 || Math.abs(newBox.height) < 16) {
+            const minSide = 24;
+            const maxSide = STAGE_SIZE * 1.5;
+            if (
+              Math.abs(newBox.width) < minSide ||
+              Math.abs(newBox.height) < minSide ||
+              Math.abs(newBox.width) > maxSide ||
+              Math.abs(newBox.height) > maxSide
+            ) {
               return oldBox;
             }
             return newBox;

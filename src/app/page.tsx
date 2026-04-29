@@ -3,12 +3,7 @@ import { ArrowRight, MousePointerClick, Wand2, Download, FolderTree, Sparkles, F
 import { Button } from "@/components/ui/button";
 import { SiteHeader } from "@/components/site/site-header";
 import { SiteFooter } from "@/components/site/site-footer";
-import { FolderSvg } from "@/components/folder/FolderSvg";
-import templates from "@/data/templates.json";
-import type { TemplateDefinition } from "@/lib/types";
-
-const TEMPLATES = templates as TemplateDefinition[];
-const HERO_PICKS = ["work", "code", "design", "media", "music", "personal"];
+import { LandingShowcase } from "@/components/site/LandingShowcase";
 
 const HOW_TO = [
   {
@@ -54,60 +49,41 @@ const FAQ = [
 export default function HomePage() {
   return (
     <div className="relative overflow-x-hidden">
+      {/* Soft gradient background à la macOS Sonoma */}
+      <div
+        aria-hidden
+        className="pointer-events-none absolute inset-x-0 top-0 -z-10 h-[680px]"
+        style={{
+          background:
+            "radial-gradient(60% 80% at 50% 0%, rgba(120,170,255,0.45), rgba(255,255,255,0) 70%), radial-gradient(40% 60% at 80% 10%, rgba(255,160,220,0.35), rgba(255,255,255,0) 70%), linear-gradient(180deg, #f5f7fb 0%, #ffffff 60%)",
+        }}
+      />
+
       <SiteHeader />
 
-      <section className="container relative grid gap-10 py-16 md:grid-cols-2 md:py-24">
+      <section className="container relative grid items-center gap-10 py-14 md:grid-cols-[1.05fr_1fr] md:py-20">
         <div className="flex flex-col justify-center gap-6">
-          <span className="inline-flex w-fit items-center gap-2 rounded-full border border-border/40 bg-secondary/40 px-3 py-1 text-xs text-muted-foreground">
+          <span className="inline-flex w-fit items-center gap-2 rounded-full glass px-3 py-1 text-xs text-neutral-700">
             <Sparkles className="h-3 w-3 text-primary" /> 100% in-browser. No login. Free PNG export.
           </span>
           <h1 className="text-balance text-4xl font-semibold tracking-tight sm:text-5xl md:text-6xl">
             Folder icons your Finder<br className="hidden md:inline" /> actually deserves.
           </h1>
           <p className="max-w-md text-pretty text-base text-muted-foreground">
-            MacFolders is a browser-based editor for designing custom macOS folder icons. Pick a
-            color, drop in an emoji or icon, export PNG or .icns, and apply it in Finder.
+            A browser-based editor for designing custom macOS folder icons. Pick a color, drop in
+            an emoji or symbol, export PNG or .icns, and apply it in Finder.
           </p>
           <div className="flex flex-wrap gap-3">
-            <Button asChild size="lg">
+            <Button asChild size="lg" className="rounded-full">
               <Link href="/editor">Open editor <ArrowRight className="ml-2 h-4 w-4" /></Link>
             </Button>
-            <Button asChild variant="secondary" size="lg">
+            <Button asChild variant="secondary" size="lg" className="rounded-full">
               <Link href="/templates">Browse 30 templates</Link>
             </Button>
           </div>
         </div>
-        <div className="relative grid place-items-center">
-          <div className="absolute inset-0 -z-10 bg-[radial-gradient(circle_at_center,_hsl(var(--primary)/0.18),_transparent_60%)]" />
-          <div className="animate-folder-bob drop-shadow-[0_30px_60px_rgba(0,0,0,0.4)]">
-            <FolderSvg baseColor="#5BB0FF" emoji="✨" size={420} label="Animated folder hero" />
-          </div>
-        </div>
-      </section>
-
-      <section className="container py-16">
-        <div className="mb-8 flex flex-col gap-2">
-          <h2 className="text-2xl font-semibold">Six examples to start with</h2>
-          <p className="text-sm text-muted-foreground">
-            Tap any folder to open it in the editor. <Link className="text-primary underline" href="/templates">See all 30 →</Link>
-          </p>
-        </div>
-        <div className="grid grid-cols-2 gap-4 md:grid-cols-3 lg:grid-cols-6">
-          {HERO_PICKS.map((id) => {
-            const t = TEMPLATES.find((x) => x.id === id);
-            if (!t) return null;
-            const emojiLayer = t.layers.find((l) => l.type === "emoji") as { emoji?: string } | undefined;
-            return (
-              <Link
-                key={t.id}
-                href={`/editor?template=${t.id}`}
-                className="group flex flex-col items-center gap-2 rounded-xl border border-border/40 bg-card/40 p-4 transition-colors hover:bg-accent"
-              >
-                <FolderSvg baseColor={t.baseColor} emoji={emojiLayer?.emoji} size={140} />
-                <span className="text-xs text-muted-foreground group-hover:text-foreground">{t.name}</span>
-              </Link>
-            );
-          })}
+        <div className="relative">
+          <LandingShowcase />
         </div>
       </section>
 

@@ -69,10 +69,20 @@ const config: Config = {
           "0%, 100%": { transform: "translateY(0px) rotate(-0.5deg)" },
           "50%": { transform: "translateY(-8px) rotate(0.5deg)" },
         },
+        "fade-bg": {
+          "0%": { opacity: "0.6" },
+          "100%": { opacity: "1" },
+        },
+        "folder-pop": {
+          "0%": { opacity: "0", transform: "translateY(8px) scale(0.96)" },
+          "100%": { opacity: "1", transform: "translateY(0) scale(1)" },
+        },
       },
       animation: {
         "fade-in": "fade-in 0.4s ease-out",
         "folder-bob": "folder-bob 5s ease-in-out infinite",
+        "fade-bg": "fade-bg 0.7s ease-out",
+        "folder-pop": "folder-pop 0.55s cubic-bezier(0.22, 1, 0.36, 1)",
       },
     },
   },

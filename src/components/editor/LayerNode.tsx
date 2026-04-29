@@ -5,7 +5,7 @@ import { Image as KonvaImage, Text as KonvaText } from "react-konva";
 import useImage from "use-image";
 import type Konva from "konva";
 import type { Layer } from "@/lib/types";
-import { emojiToTwemojiUrl } from "@/lib/emoji";
+import { emojiToAppleUrl } from "@/lib/emoji";
 import { renderSymbolToDataUrl } from "@/lib/symbols";
 
 interface LayerNodeProps {
@@ -95,26 +95,31 @@ const COMMON_HANDLERS = (
   onMouseDown: onSelect,
   onTap: onSelect,
   onDragStart: () => onSaveSnapshot(),
-  onDragEnd: (e: Konva.KonvaEventObject<DragEvent>) =>
-    onChange({ x: e.target.x(), y: e.target.y() }),
+  onDragEnd: (e: Konva.KonvaEventObject<DragEvent>) => {
+    // Drag should never modify scale; reset to be safe.
+    e.target.scaleX(layer.scale);
+    e.target.scaleY(layer.scale);
+    onChange({ x: e.target.x(), y: e.target.y() });
+  },
   onTransformStart: () => onSaveSnapshot(),
   onTransformEnd: (e: Konva.KonvaEventObject<Event>) => {
     const node = e.target;
     const newScale = node.scaleX();
+    const merged = Math.max(0.1, Math.min(20, layer.scale * newScale));
+    node.scaleX(layer.scale);
+    node.scaleY(layer.scale);
     onChange({
       x: node.x(),
       y: node.y(),
-      scale: layer.scale * newScale,
+      scale: merged,
       rotation: node.rotation(),
     });
-    node.scaleX(1);
-    node.scaleY(1);
   },
 });
 
 function EmojiLayer({ layer, onSelect, onChange, onSaveSnapshot, registerNode }:
   LayerNodeProps & { layer: Extract<Layer, { type: "emoji" }> }) {
-  const url = emojiToTwemojiUrl(layer.emoji);
+  const url = emojiToAppleUrl(layer.emoji);
   const [image] = useImage(url, "anonymous");
   const ref = React.useRef<Konva.Image>(null);
   React.useEffect(() => {

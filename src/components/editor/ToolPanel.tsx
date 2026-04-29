@@ -177,7 +177,7 @@ function SymbolTab() {
                 type: "symbol",
                 name,
                 symbolName: name,
-                strokeWidth: 28,
+                strokeWidth: 2,
                 filled: false,
                 scale: 7,
                 tint: "#FFFFFF",

@@ -72,22 +72,6 @@ export function Inspector() {
       </div>
 
       <SliderField
-        label={`Scale: ${layer.scale.toFixed(2)}`}
-        value={layer.scale}
-        min={0.1}
-        max={10}
-        step={0.05}
-        onChange={(v) => update({ scale: v })}
-      />
-      <SliderField
-        label={`Rotation: ${Math.round(layer.rotation)}°`}
-        value={layer.rotation}
-        min={-180}
-        max={180}
-        step={1}
-        onChange={(v) => update({ rotation: v })}
-      />
-      <SliderField
         label={`Opacity: ${Math.round(layer.opacity * 100)}%`}
         value={layer.opacity}
         min={0}
@@ -130,11 +114,11 @@ export function Inspector() {
       {layer.type === "symbol" && (
         <>
           <SliderField
-            label={`Stroke width: ${layer.strokeWidth}`}
+            label={`Stroke width: ${layer.strokeWidth.toFixed(2)}`}
             value={layer.strokeWidth}
-            min={4}
-            max={64}
-            step={2}
+            min={1}
+            max={4}
+            step={0.25}
             onChange={(v) => update({ strokeWidth: v })}
           />
           <ToggleField

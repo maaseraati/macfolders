@@ -163,7 +163,7 @@ export const SYMBOL_LIBRARY: { name: string; component: LucideIcon }[] = [
 export function renderSymbolToDataUrl({
   name,
   color,
-  strokeWidth = 32,
+  strokeWidth = 2,
   filled = false,
   size = 1024,
 }: {
