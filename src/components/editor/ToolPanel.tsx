@@ -57,7 +57,7 @@ const TAB_TRIGGERS: { value: string; label: string; Icon: typeof Palette }[] = [
 export function ToolPanel() {
   return (
     <Tabs defaultValue="color" className="flex h-full flex-col">
-      <div className="border-b border-black/5 bg-white px-2 pt-2">
+      <div className="border-b border-black/5 bg-white px-2 pb-2 pt-2">
         <TabsList className="h-auto w-full justify-between gap-0.5 bg-transparent p-0">
           {TAB_TRIGGERS.map(({ value, label, Icon }) => (
             <TabsTrigger
@@ -188,7 +188,7 @@ function SymbolTab() {
       <div className="space-y-1">
         <Label>Lucide symbols</Label>
         <Input
-          placeholder="🔍 Search..."
+          placeholder="Search…"
           value={query}
           onChange={(e) => setQuery(e.target.value)}
         />

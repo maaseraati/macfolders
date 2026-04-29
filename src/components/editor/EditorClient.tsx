@@ -139,7 +139,7 @@ export function EditorClient() {
         </div>
       </header>
 
-      <div className="grid flex-1 grid-cols-[300px_minmax(0,1fr)_320px] gap-2 overflow-hidden p-2">
+      <div className="grid flex-1 grid-cols-[332px_minmax(0,1fr)_320px] gap-2 overflow-hidden p-2">
         <aside className="overflow-hidden rounded-xl border border-black/5 bg-white shadow-sm">
           <ToolPanel />
         </aside>
