@@ -1,0 +1,997 @@
+[
+  {
+    "id": "work",
+    "name": "Work",
+    "category": "Work",
+    "baseColor": "#5BB0FF",
+    "layers": [
+      {
+        "type": "emoji",
+        "name": "💼",
+        "emoji": "💼",
+        "x": 512,
+        "y": 600,
+        "scale": 1.6,
+        "rotation": 0,
+        "opacity": 1,
+        "blendMode": "source-over",
+        "shadow": {
+          "enabled": true,
+          "color": "#000000",
+          "blur": 18,
+          "offsetX": 0,
+          "offsetY": 8,
+          "opacity": 0.3
+        },
+        "tint": null,
+        "zone": "inside",
+        "hidden": false,
+        "locked": false
+      }
+    ]
+  },
+  {
+    "id": "code",
+    "name": "Code",
+    "category": "Code",
+    "baseColor": "#7F8CFF",
+    "layers": [
+      {
+        "type": "symbol",
+        "name": "Code",
+        "symbolName": "Code2",
+        "strokeWidth": 2,
+        "filled": false,
+        "x": 512,
+        "y": 600,
+        "scale": 7,
+        "rotation": 0,
+        "opacity": 1,
+        "blendMode": "source-over",
+        "shadow": {
+          "enabled": true,
+          "color": "#000000",
+          "blur": 18,
+          "offsetX": 0,
+          "offsetY": 8,
+          "opacity": 0.3
+        },
+        "tint": "#FFFFFF",
+        "zone": "inside",
+        "hidden": false,
+        "locked": false
+      }
+    ]
+  },
+  {
+    "id": "design",
+    "name": "Design",
+    "category": "Design",
+    "baseColor": "#FF6BC1",
+    "layers": [
+      {
+        "type": "symbol",
+        "name": "Palette",
+        "symbolName": "Palette",
+        "strokeWidth": 2,
+        "filled": false,
+        "x": 512,
+        "y": 600,
+        "scale": 7,
+        "rotation": -8,
+        "opacity": 1,
+        "blendMode": "source-over",
+        "shadow": {
+          "enabled": true,
+          "color": "#000000",
+          "blur": 18,
+          "offsetX": 0,
+          "offsetY": 8,
+          "opacity": 0.3
+        },
+        "tint": "#FFFFFF",
+        "zone": "inside",
+        "hidden": false,
+        "locked": false
+      }
+    ]
+  },
+  {
+    "id": "media",
+    "name": "Media",
+    "category": "Media",
+    "baseColor": "#FF7A45",
+    "layers": [
+      {
+        "type": "emoji",
+        "name": "🎬",
+        "emoji": "🎬",
+        "x": 512,
+        "y": 600,
+        "scale": 1.6,
+        "rotation": 0,
+        "opacity": 1,
+        "blendMode": "source-over",
+        "shadow": {
+          "enabled": true,
+          "color": "#000000",
+          "blur": 18,
+          "offsetX": 0,
+          "offsetY": 8,
+          "opacity": 0.3
+        },
+        "tint": null,
+        "zone": "inside",
+        "hidden": false,
+        "locked": false
+      }
+    ]
+  },
+  {
+    "id": "school",
+    "name": "School",
+    "category": "School",
+    "baseColor": "#69C28A",
+    "layers": [
+      {
+        "type": "emoji",
+        "name": "🎓",
+        "emoji": "🎓",
+        "x": 512,
+        "y": 600,
+        "scale": 1.6,
+        "rotation": 0,
+        "opacity": 1,
+        "blendMode": "source-over",
+        "shadow": {
+          "enabled": true,
+          "color": "#000000",
+          "blur": 18,
+          "offsetX": 0,
+          "offsetY": 8,
+          "opacity": 0.3
+        },
+        "tint": null,
+        "zone": "inside",
+        "hidden": false,
+        "locked": false
+      }
+    ]
+  },
+  {
+    "id": "personal",
+    "name": "Personal",
+    "category": "Personal",
+    "baseColor": "#C58CFF",
+    "layers": [
+      {
+        "type": "emoji",
+        "name": "🏠",
+        "emoji": "🏠",
+        "x": 512,
+        "y": 600,
+        "scale": 1.6,
+        "rotation": 0,
+        "opacity": 1,
+        "blendMode": "source-over",
+        "shadow": {
+          "enabled": true,
+          "color": "#000000",
+          "blur": 18,
+          "offsetX": 0,
+          "offsetY": 8,
+          "opacity": 0.3
+        },
+        "tint": null,
+        "zone": "inside",
+        "hidden": false,
+        "locked": false
+      }
+    ]
+  },
+  {
+    "id": "aesthetic",
+    "name": "Aesthetic",
+    "category": "Aesthetic",
+    "baseColor": "#F2C7E2",
+    "layers": [
+      {
+        "type": "emoji",
+        "name": "🌸",
+        "emoji": "🌸",
+        "x": 512,
+        "y": 600,
+        "scale": 1.6,
+        "rotation": -10,
+        "opacity": 1,
+        "blendMode": "source-over",
+        "shadow": {
+          "enabled": true,
+          "color": "#000000",
+          "blur": 18,
+          "offsetX": 0,
+          "offsetY": 8,
+          "opacity": 0.3
+        },
+        "tint": null,
+        "zone": "inside",
+        "hidden": false,
+        "locked": false
+      }
+    ]
+  },
+  {
+    "id": "music",
+    "name": "Music",
+    "category": "Media",
+    "baseColor": "#FFB347",
+    "layers": [
+      {
+        "type": "symbol",
+        "name": "Music",
+        "symbolName": "Music2",
+        "strokeWidth": 2,
+        "filled": false,
+        "x": 512,
+        "y": 600,
+        "scale": 7,
+        "rotation": -6,
+        "opacity": 1,
+        "blendMode": "source-over",
+        "shadow": {
+          "enabled": true,
+          "color": "#000000",
+          "blur": 18,
+          "offsetX": 0,
+          "offsetY": 8,
+          "opacity": 0.3
+        },
+        "tint": "#FFFFFF",
+        "zone": "inside",
+        "hidden": false,
+        "locked": false
+      }
+    ]
+  },
+  {
+    "id": "photos",
+    "name": "Photos",
+    "category": "Media",
+    "baseColor": "#5DD4C4",
+    "layers": [
+      {
+        "type": "emoji",
+        "name": "📸",
+        "emoji": "📸",
+        "x": 512,
+        "y": 600,
+        "scale": 1.6,
+        "rotation": 0,
+        "opacity": 1,
+        "blendMode": "source-over",
+        "shadow": {
+          "enabled": true,
+          "color": "#000000",
+          "blur": 18,
+          "offsetX": 0,
+          "offsetY": 8,
+          "opacity": 0.3
+        },
+        "tint": null,
+        "zone": "inside",
+        "hidden": false,
+        "locked": false
+      }
+    ]
+  },
+  {
+    "id": "documents",
+    "name": "Documents",
+    "category": "Work",
+    "baseColor": "#7AB8FF",
+    "layers": [
+      {
+        "type": "symbol",
+        "name": "FileText",
+        "symbolName": "FileText",
+        "strokeWidth": 2,
+        "filled": false,
+        "x": 512,
+        "y": 600,
+        "scale": 7,
+        "rotation": 0,
+        "opacity": 1,
+        "blendMode": "source-over",
+        "shadow": {
+          "enabled": true,
+          "color": "#000000",
+          "blur": 18,
+          "offsetX": 0,
+          "offsetY": 8,
+          "opacity": 0.3
+        },
+        "tint": "#FFFFFF",
+        "zone": "inside",
+        "hidden": false,
+        "locked": false
+      }
+    ]
+  },
+  {
+    "id": "downloads",
+    "name": "Downloads",
+    "category": "Personal",
+    "baseColor": "#5BB0FF",
+    "layers": [
+      {
+        "type": "symbol",
+        "name": "Download",
+        "symbolName": "Download",
+        "strokeWidth": 2,
+        "filled": false,
+        "x": 512,
+        "y": 600,
+        "scale": 7,
+        "rotation": 0,
+        "opacity": 1,
+        "blendMode": "source-over",
+        "shadow": {
+          "enabled": true,
+          "color": "#000000",
+          "blur": 18,
+          "offsetX": 0,
+          "offsetY": 8,
+          "opacity": 0.3
+        },
+        "tint": "#FFFFFF",
+        "zone": "inside",
+        "hidden": false,
+        "locked": false
+      }
+    ]
+  },
+  {
+    "id": "finance",
+    "name": "Finance",
+    "category": "Work",
+    "baseColor": "#5DCB8A",
+    "layers": [
+      {
+        "type": "symbol",
+        "name": "DollarSign",
+        "symbolName": "DollarSign",
+        "strokeWidth": 2,
+        "filled": false,
+        "x": 512,
+        "y": 600,
+        "scale": 7,
+        "rotation": 0,
+        "opacity": 1,
+        "blendMode": "source-over",
+        "shadow": {
+          "enabled": true,
+          "color": "#000000",
+          "blur": 18,
+          "offsetX": 0,
+          "offsetY": 8,
+          "opacity": 0.3
+        },
+        "tint": "#FFFFFF",
+        "zone": "inside",
+        "hidden": false,
+        "locked": false
+      }
+    ]
+  },
+  {
+    "id": "writing",
+    "name": "Writing",
+    "category": "School",
+    "baseColor": "#E8C77A",
+    "layers": [
+      {
+        "type": "emoji",
+        "name": "✍️",
+        "emoji": "✍️",
+        "x": 512,
+        "y": 600,
+        "scale": 1.6,
+        "rotation": -8,
+        "opacity": 1,
+        "blendMode": "source-over",
+        "shadow": {
+          "enabled": true,
+          "color": "#000000",
+          "blur": 18,
+          "offsetX": 0,
+          "offsetY": 8,
+          "opacity": 0.3
+        },
+        "tint": null,
+        "zone": "inside",
+        "hidden": false,
+        "locked": false
+      }
+    ]
+  },
+  {
+    "id": "projects",
+    "name": "Projects",
+    "category": "Work",
+    "baseColor": "#7F8CFF",
+    "layers": [
+      {
+        "type": "symbol",
+        "name": "Layers",
+        "symbolName": "Layers",
+        "strokeWidth": 2,
+        "filled": false,
+        "x": 512,
+        "y": 600,
+        "scale": 7,
+        "rotation": 0,
+        "opacity": 1,
+        "blendMode": "source-over",
+        "shadow": {
+          "enabled": true,
+          "color": "#000000",
+          "blur": 18,
+          "offsetX": 0,
+          "offsetY": 8,
+          "opacity": 0.3
+        },
+        "tint": "#FFFFFF",
+        "zone": "inside",
+        "hidden": false,
+        "locked": false
+      }
+    ]
+  },
+  {
+    "id": "research",
+    "name": "Research",
+    "category": "School",
+    "baseColor": "#5BB0FF",
+    "layers": [
+      {
+        "type": "symbol",
+        "name": "Microscope",
+        "symbolName": "Microscope",
+        "strokeWidth": 2,
+        "filled": false,
+        "x": 512,
+        "y": 600,
+        "scale": 7,
+        "rotation": 0,
+        "opacity": 1,
+        "blendMode": "source-over",
+        "shadow": {
+          "enabled": true,
+          "color": "#000000",
+          "blur": 18,
+          "offsetX": 0,
+          "offsetY": 8,
+          "opacity": 0.3
+        },
+        "tint": "#FFFFFF",
+        "zone": "inside",
+        "hidden": false,
+        "locked": false
+      }
+    ]
+  },
+  {
+    "id": "games",
+    "name": "Games",
+    "category": "Personal",
+    "baseColor": "#FF6E6E",
+    "layers": [
+      {
+        "type": "emoji",
+        "name": "🎮",
+        "emoji": "🎮",
+        "x": 512,
+        "y": 600,
+        "scale": 1.6,
+        "rotation": 0,
+        "opacity": 1,
+        "blendMode": "source-over",
+        "shadow": {
+          "enabled": true,
+          "color": "#000000",
+          "blur": 18,
+          "offsetX": 0,
+          "offsetY": 8,
+          "opacity": 0.3
+        },
+        "tint": null,
+        "zone": "inside",
+        "hidden": false,
+        "locked": false
+      }
+    ]
+  },
+  {
+    "id": "books",
+    "name": "Books",
+    "category": "School",
+    "baseColor": "#9C7B5C",
+    "layers": [
+      {
+        "type": "emoji",
+        "name": "📚",
+        "emoji": "📚",
+        "x": 512,
+        "y": 600,
+        "scale": 1.6,
+        "rotation": 0,
+        "opacity": 1,
+        "blendMode": "source-over",
+        "shadow": {
+          "enabled": true,
+          "color": "#000000",
+          "blur": 18,
+          "offsetX": 0,
+          "offsetY": 8,
+          "opacity": 0.3
+        },
+        "tint": null,
+        "zone": "inside",
+        "hidden": false,
+        "locked": false
+      }
+    ]
+  },
+  {
+    "id": "ideas",
+    "name": "Ideas",
+    "category": "Personal",
+    "baseColor": "#FFD86B",
+    "layers": [
+      {
+        "type": "emoji",
+        "name": "💡",
+        "emoji": "💡",
+        "x": 512,
+        "y": 600,
+        "scale": 1.6,
+        "rotation": -6,
+        "opacity": 1,
+        "blendMode": "source-over",
+        "shadow": {
+          "enabled": true,
+          "color": "#000000",
+          "blur": 18,
+          "offsetX": 0,
+          "offsetY": 8,
+          "opacity": 0.3
+        },
+        "tint": null,
+        "zone": "inside",
+        "hidden": false,
+        "locked": false
+      }
+    ]
+  },
+  {
+    "id": "travel",
+    "name": "Travel",
+    "category": "Personal",
+    "baseColor": "#5DC1FF",
+    "layers": [
+      {
+        "type": "emoji",
+        "name": "✈️",
+        "emoji": "✈️",
+        "x": 512,
+        "y": 600,
+        "scale": 1.6,
+        "rotation": -16,
+        "opacity": 1,
+        "blendMode": "source-over",
+        "shadow": {
+          "enabled": true,
+          "color": "#000000",
+          "blur": 18,
+          "offsetX": 0,
+          "offsetY": 8,
+          "opacity": 0.3
+        },
+        "tint": null,
+        "zone": "inside",
+        "hidden": false,
+        "locked": false
+      }
+    ]
+  },
+  {
+    "id": "fitness",
+    "name": "Fitness",
+    "category": "Personal",
+    "baseColor": "#FF6E6E",
+    "layers": [
+      {
+        "type": "emoji",
+        "name": "🏋️",
+        "emoji": "🏋️",
+        "x": 512,
+        "y": 600,
+        "scale": 1.6,
+        "rotation": 0,
+        "opacity": 1,
+        "blendMode": "source-over",
+        "shadow": {
+          "enabled": true,
+          "color": "#000000",
+          "blur": 18,
+          "offsetX": 0,
+          "offsetY": 8,
+          "opacity": 0.3
+        },
+        "tint": null,
+        "zone": "inside",
+        "hidden": false,
+        "locked": false
+      }
+    ]
+  },
+  {
+    "id": "recipes",
+    "name": "Recipes",
+    "category": "Personal",
+    "baseColor": "#FF8A65",
+    "layers": [
+      {
+        "type": "emoji",
+        "name": "🍳",
+        "emoji": "🍳",
+        "x": 512,
+        "y": 600,
+        "scale": 1.6,
+        "rotation": -6,
+        "opacity": 1,
+        "blendMode": "source-over",
+        "shadow": {
+          "enabled": true,
+          "color": "#000000",
+          "blur": 18,
+          "offsetX": 0,
+          "offsetY": 8,
+          "opacity": 0.3
+        },
+        "tint": null,
+        "zone": "inside",
+        "hidden": false,
+        "locked": false
+      }
+    ]
+  },
+  {
+    "id": "videos",
+    "name": "Videos",
+    "category": "Media",
+    "baseColor": "#FF5B6E",
+    "layers": [
+      {
+        "type": "symbol",
+        "name": "Video",
+        "symbolName": "Video",
+        "strokeWidth": 2,
+        "filled": false,
+        "x": 512,
+        "y": 600,
+        "scale": 7,
+        "rotation": 0,
+        "opacity": 1,
+        "blendMode": "source-over",
+        "shadow": {
+          "enabled": true,
+          "color": "#000000",
+          "blur": 18,
+          "offsetX": 0,
+          "offsetY": 8,
+          "opacity": 0.3
+        },
+        "tint": "#FFFFFF",
+        "zone": "inside",
+        "hidden": false,
+        "locked": false
+      }
+    ]
+  },
+  {
+    "id": "podcasts",
+    "name": "Podcasts",
+    "category": "Media",
+    "baseColor": "#B97AFF",
+    "layers": [
+      {
+        "type": "symbol",
+        "name": "Mic",
+        "symbolName": "Mic",
+        "strokeWidth": 2,
+        "filled": false,
+        "x": 512,
+        "y": 600,
+        "scale": 7,
+        "rotation": 0,
+        "opacity": 1,
+        "blendMode": "source-over",
+        "shadow": {
+          "enabled": true,
+          "color": "#000000",
+          "blur": 18,
+          "offsetX": 0,
+          "offsetY": 8,
+          "opacity": 0.3
+        },
+        "tint": "#FFFFFF",
+        "zone": "inside",
+        "hidden": false,
+        "locked": false
+      }
+    ]
+  },
+  {
+    "id": "art",
+    "name": "Art",
+    "category": "Design",
+    "baseColor": "#F47BCB",
+    "layers": [
+      {
+        "type": "emoji",
+        "name": "🎨",
+        "emoji": "🎨",
+        "x": 512,
+        "y": 600,
+        "scale": 1.6,
+        "rotation": -6,
+        "opacity": 1,
+        "blendMode": "source-over",
+        "shadow": {
+          "enabled": true,
+          "color": "#000000",
+          "blur": 18,
+          "offsetX": 0,
+          "offsetY": 8,
+          "opacity": 0.3
+        },
+        "tint": null,
+        "zone": "inside",
+        "hidden": false,
+        "locked": false
+      }
+    ]
+  },
+  {
+    "id": "screenshots",
+    "name": "Screenshots",
+    "category": "Personal",
+    "baseColor": "#7AB8FF",
+    "layers": [
+      {
+        "type": "symbol",
+        "name": "Image",
+        "symbolName": "Image",
+        "strokeWidth": 2,
+        "filled": false,
+        "x": 512,
+        "y": 600,
+        "scale": 7,
+        "rotation": 0,
+        "opacity": 1,
+        "blendMode": "source-over",
+        "shadow": {
+          "enabled": true,
+          "color": "#000000",
+          "blur": 18,
+          "offsetX": 0,
+          "offsetY": 8,
+          "opacity": 0.3
+        },
+        "tint": "#FFFFFF",
+        "zone": "inside",
+        "hidden": false,
+        "locked": false
+      }
+    ]
+  },
+  {
+    "id": "archive",
+    "name": "Archive",
+    "category": "Work",
+    "baseColor": "#9B9FB0",
+    "layers": [
+      {
+        "type": "symbol",
+        "name": "Archive",
+        "symbolName": "Archive",
+        "strokeWidth": 2,
+        "filled": false,
+        "x": 512,
+        "y": 600,
+        "scale": 7,
+        "rotation": 0,
+        "opacity": 1,
+        "blendMode": "source-over",
+        "shadow": {
+          "enabled": true,
+          "color": "#000000",
+          "blur": 18,
+          "offsetX": 0,
+          "offsetY": 8,
+          "opacity": 0.3
+        },
+        "tint": "#FFFFFF",
+        "zone": "inside",
+        "hidden": false,
+        "locked": false
+      }
+    ]
+  },
+  {
+    "id": "secrets",
+    "name": "Secrets",
+    "category": "Work",
+    "baseColor": "#3A3F50",
+    "layers": [
+      {
+        "type": "symbol",
+        "name": "Lock",
+        "symbolName": "Lock",
+        "strokeWidth": 2,
+        "filled": false,
+        "x": 512,
+        "y": 600,
+        "scale": 7,
+        "rotation": 0,
+        "opacity": 1,
+        "blendMode": "source-over",
+        "shadow": {
+          "enabled": true,
+          "color": "#000000",
+          "blur": 18,
+          "offsetX": 0,
+          "offsetY": 8,
+          "opacity": 0.3
+        },
+        "tint": "#FFFFFF",
+        "zone": "inside",
+        "hidden": false,
+        "locked": false
+      }
+    ]
+  },
+  {
+    "id": "cloud",
+    "name": "Cloud",
+    "category": "Work",
+    "baseColor": "#9CC6FF",
+    "layers": [
+      {
+        "type": "symbol",
+        "name": "Cloud",
+        "symbolName": "Cloud",
+        "strokeWidth": 2,
+        "filled": true,
+        "x": 512,
+        "y": 600,
+        "scale": 7,
+        "rotation": 0,
+        "opacity": 1,
+        "blendMode": "source-over",
+        "shadow": {
+          "enabled": true,
+          "color": "#000000",
+          "blur": 18,
+          "offsetX": 0,
+          "offsetY": 8,
+          "opacity": 0.3
+        },
+        "tint": "#FFFFFF",
+        "zone": "inside",
+        "hidden": false,
+        "locked": false
+      }
+    ]
+  },
+  {
+    "id": "notes",
+    "name": "Notes",
+    "category": "Personal",
+    "baseColor": "#FFD86B",
+    "layers": [
+      {
+        "type": "symbol",
+        "name": "StickyNote",
+        "symbolName": "StickyNote",
+        "strokeWidth": 2,
+        "filled": false,
+        "x": 512,
+        "y": 600,
+        "scale": 7,
+        "rotation": -4,
+        "opacity": 1,
+        "blendMode": "source-over",
+        "shadow": {
+          "enabled": true,
+          "color": "#000000",
+          "blur": 18,
+          "offsetX": 0,
+          "offsetY": 8,
+          "opacity": 0.3
+        },
+        "tint": "#3A2E15",
+        "zone": "inside",
+        "hidden": false,
+        "locked": false
+      }
+    ]
+  },
+  {
+    "id": "starred",
+    "name": "Starred",
+    "category": "Aesthetic",
+    "baseColor": "#FFD86B",
+    "layers": [
+      {
+        "type": "symbol",
+        "name": "Star",
+        "symbolName": "Star",
+        "strokeWidth": 2,
+        "filled": true,
+        "x": 512,
+        "y": 600,
+        "scale": 7,
+        "rotation": 0,
+        "opacity": 1,
+        "blendMode": "source-over",
+        "shadow": {
+          "enabled": true,
+          "color": "#000000",
+          "blur": 18,
+          "offsetX": 0,
+          "offsetY": 8,
+          "opacity": 0.3
+        },
+        "tint": "#FFFFFF",
+        "zone": "inside",
+        "hidden": false,
+        "locked": false
+      }
+    ]
+  },
+  {
+    "id": "love",
+    "name": "Love",
+    "category": "Aesthetic",
+    "baseColor": "#FF7AB6",
+    "layers": [
+      {
+        "type": "symbol",
+        "name": "Heart",
+        "symbolName": "Heart",
+        "strokeWidth": 2,
+        "filled": true,
+        "x": 512,
+        "y": 600,
+        "scale": 7,
+        "rotation": 0,
+        "opacity": 1,
+        "blendMode": "source-over",
+        "shadow": {
+          "enabled": true,
+          "color": "#000000",
+          "blur": 18,
+          "offsetX": 0,
+          "offsetY": 8,
+          "opacity": 0.3
+        },
+        "tint": "#FFFFFF",
+        "zone": "inside",
+        "hidden": false,
+        "locked": false
+      }
+    ]
+  }
+]
