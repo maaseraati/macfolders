@@ -8,14 +8,18 @@ import { Buffer } from "buffer";
 import { STAGE_SIZE } from "@/lib/folder-paths";
 import { slugify } from "./utils";
 
+function pixelRatioFor(stage: Konva.Stage, size = STAGE_SIZE): number {
+  const stageSize = Math.max(stage.width(), stage.height(), 1);
+  return size / stageSize;
+}
+
 export async function exportPng(
   stage: Konva.Stage,
   size: number,
   filename: string
 ): Promise<Blob> {
-  // Hide transformer borders during export.
   const dataUrl = stage.toDataURL({
-    pixelRatio: size / STAGE_SIZE,
+    pixelRatio: pixelRatioFor(stage, size),
     mimeType: "image/png",
   });
   const blob = await fetch(dataUrl).then((r) => r.blob());
@@ -24,7 +28,10 @@ export async function exportPng(
 }
 
 export async function copyPngToClipboard(stage: Konva.Stage): Promise<void> {
-  const dataUrl = stage.toDataURL({ pixelRatio: 1, mimeType: "image/png" });
+  const dataUrl = stage.toDataURL({
+    pixelRatio: pixelRatioFor(stage),
+    mimeType: "image/png",
+  });
   const blob = await fetch(dataUrl).then((r) => r.blob());
   if (typeof ClipboardItem === "undefined" || !navigator.clipboard?.write) {
     throw new Error("Clipboard API not available");
@@ -37,7 +44,7 @@ export async function stageToPngBuffer(
   size: number
 ): Promise<Uint8Array> {
   const dataUrl = stage.toDataURL({
-    pixelRatio: size / STAGE_SIZE,
+    pixelRatio: pixelRatioFor(stage, size),
     mimeType: "image/png",
   });
   const arrayBuf = await fetch(dataUrl).then((r) => r.arrayBuffer());
