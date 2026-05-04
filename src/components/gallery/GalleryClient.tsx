@@ -2,6 +2,7 @@
 
 import * as React from "react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { Copy, Palette, Pencil, Search, Trash2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -10,6 +11,7 @@ import { useEditorStore } from "@/lib/store";
 import type { FolderProject } from "@/lib/types";
 
 export function GalleryClient() {
+  const router = useRouter();
   const hydrate = useEditorStore((s) => s.hydrate);
   const hydrated = useEditorStore((s) => s.hydrated);
   const getGallery = useEditorStore((s) => s.getGallery);
@@ -56,6 +58,10 @@ export function GalleryClient() {
   }, [color, items, query, tag]);
 
   const refresh = () => setItems(getGallery());
+  const openInEditor = (item: FolderProject) => {
+    loadProject(item);
+    router.push("/editor");
+  };
 
   return (
     <div className="space-y-6">
@@ -146,15 +152,12 @@ export function GalleryClient() {
                 </div>
                 <div className="mt-4 grid grid-cols-3 gap-2">
                   <Button
-                    asChild
                     variant="secondary"
                     size="sm"
                     className="rounded-full"
-                    onClick={() => loadProject(item)}
+                    onClick={() => openInEditor(item)}
                   >
-                    <Link href="/editor">
-                      <Pencil className="mr-1 h-3.5 w-3.5" /> Edit
-                    </Link>
+                    <Pencil className="mr-1 h-3.5 w-3.5" /> Edit
                   </Button>
                   <Button
                     variant="secondary"
